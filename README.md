@@ -85,6 +85,12 @@ npm start
 ```
 The Express API will be running on port `5000` (by default).
 
+### 4. Enable Permissions
+For the platform's full functionality to work correctly in your browser or mobile device, please ensure you allow the following permissions when prompted:
+- 📍 **Location**: Required for the Weather Intelligence System to provide localized weather updates and crop recommendations.
+- 🎤 **Microphone**: Required for the Voice Assistant to enable hands-free interactions in multiple languages.
+- 📷 **Camera**: Required for the Pesticide Predictor's live preview and crop disease diagnosis.
+
 ---
 
 <div align="center">
