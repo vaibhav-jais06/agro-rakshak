@@ -1,0 +1,68 @@
+[
+  {
+    "name": "Rice Blast",
+    "crop": "Rice",
+    "type": "Fungal",
+    "symptoms": [
+      "Diamond-shaped lesions on leaves",
+      "White to gray spots with dark borders",
+      "Neck rot in severe cases"
+    ],
+    "causes": "High humidity, excessive nitrogen, cloudy weather",
+    "treatment": [
+      "Tricyclazole @ 0.6g/liter",
+      "Carbendazim @ 1g/liter",
+      "Remove infected plants"
+    ],
+    "prevention": [
+      "Use resistant varieties",
+      "Avoid excessive nitrogen",
+      "Maintain proper plant spacing"
+    ],
+    "severity": "High"
+  },
+  {
+    "name": "Wheat Rust",
+    "crop": "Wheat",
+    "type": "Fungal",
+    "symptoms": [
+      "Orange-brown pustules on leaves",
+      "Yellow spots on upper leaf surface",
+      "Reduced grain quality"
+    ],
+    "causes": "Cool, moist weather conditions",
+    "treatment": [
+      "Propiconazole @ 1ml/liter",
+      "Mancozeb @ 2.5g/liter",
+      "Spray at disease appearance"
+    ],
+    "prevention": [
+      "Use rust-resistant varieties",
+      "Timely sowing",
+      "Balanced fertilization"
+    ],
+    "severity": "Medium"
+  },
+  {
+    "name": "Cotton Wilt",
+    "crop": "Cotton",
+    "type": "Fungal",
+    "symptoms": [
+      "Yellowing of leaves",
+      "Wilting of entire plant",
+      "Dark discoloration of vascular tissue"
+    ],
+    "causes": "Soil-borne fungus, waterlogging",
+    "treatment": [
+      "Soil treatment with Carbendazim",
+      "Remove and burn infected plants",
+      "Crop rotation"
+    ],
+    "prevention": [
+      "Use wilt-resistant varieties",
+      "Proper drainage",
+      "Deep summer ploughing"
+    ],
+    "severity": "High"
+  }
+]

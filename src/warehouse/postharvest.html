@@ -1,0 +1,675 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agro Rakshak • Post-Harvest Storage Guide</title>
+    <link rel="icon" type="image/png" href="logo.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"]
+            }
+          }
+        }
+      };
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      :root {
+        --primary-color: #15803d;
+        --secondary-color: #3d6b1f;
+        --accent-color: #4ade80;
+        --success-color: #10b981;
+        --warning-color: #f59e0b;
+        --danger-color: #ef4444;
+        --info-color: #3b82f6;
+        --bg-color: #ffffff;
+        --card-bg: #ffffff;
+        --text-primary: #1f2937;
+        --text-secondary: #6b7280;
+        --border-color: #e5e7eb;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+
+      body {
+        background: radial-gradient(circle at top, rgba(74, 222, 128, 0.18), transparent 45%),
+          radial-gradient(circle at 80% 0, rgba(59, 130, 246, 0.12), transparent 40%),
+          var(--bg-color);
+        color: var(--text-primary);
+        margin: 0;
+        padding: 0;
+      }
+
+      .hero {
+        background: linear-gradient(115deg, rgba(21, 128, 61, 0.15), rgba(15, 118, 110, 0.1));
+        border-bottom: 1px solid rgba(15, 118, 110, 0.08);
+        box-shadow: 0 10px 25px rgba(15, 118, 110, 0.08);
+      }
+
+      .tab-btn {
+        border: 1px solid rgba(21, 128, 61, 0.4);
+        color: var(--primary-color);
+        background: linear-gradient(120deg, rgba(74, 222, 128, 0.15), rgba(59, 130, 246, 0.08));
+        transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      }
+
+      .tab-btn.active {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: #fff;
+        box-shadow: var(--shadow);
+      }
+
+      .tab-btn:not(.active):hover {
+        background: linear-gradient(135deg, rgba(21, 128, 61, 0.2), rgba(59, 130, 246, 0.15));
+        transform: translateY(-1px);
+      }
+
+      .card-shell {
+        background: linear-gradient(180deg, #ffffff 0%, #ecfdf5 120%);
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(21, 128, 61, 0.08);
+      }
+
+      .card-elevated {
+        background: #ffffff;
+        border: 1px solid rgba(15, 118, 110, 0.08);
+        box-shadow: var(--shadow);
+      }
+
+      .hero-card {
+        background: linear-gradient(125deg, rgba(5, 150, 105, 0.15), rgba(59, 130, 246, 0.12), rgba(4, 120, 87, 0.18));
+        border: 1px solid rgba(4, 120, 87, 0.2);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .stat-pill {
+        background: linear-gradient(135deg, rgba(4, 120, 87, 0.15), rgba(234, 179, 8, 0.12));
+        border: 1px solid rgba(4, 120, 87, 0.15);
+        color: var(--primary-color);
+        padding: 0.85rem 1.2rem;
+        border-radius: 18px;
+        box-shadow: var(--shadow);
+      }
+
+      .action-btn {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: #ffffff;
+        padding: 0.85rem 1.75rem;
+        border-radius: 14px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: var(--shadow);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+
+      .action-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-hover);
+      }
+
+      .badge-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.3rem 0.75rem;
+        border-radius: 999px;
+        background: rgba(4, 120, 87, 0.12);
+        color: var(--primary-color);
+      }
+
+      .badge-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        background: rgba(74, 222, 128, 0.2);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-color);
+        box-shadow: var(--shadow);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen text-slate-800 font-sans">
+    <header style="background: white; box-shadow: var(--shadow); border-bottom: 1px solid var(--border-color); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; width: 100%;">
+      <div class="max-w-[95%] sm:max-w-[90%] mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
+          <div class="relative flex items-center justify-between h-14 sm:h-16">
+              <!-- Left: Back to Portal -->
+              <div class="flex items-center flex-shrink-0">
+                  <a href="#" class="flex items-center gap-1 sm:gap-2 hover:opacity-80 transition-opacity" style="color:  #15803d;">
+                      <i data-lucide="arrow-left" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                      <span class="text-xs sm:text-sm font-medium hidden xs:inline sm:inline">Back to Portal</span>
+                  
+                  </a>
+              </div>
+
+              <!-- Center: Title -->
+              <div class="absolute inset-x-0 flex justify-center pointer-events-none px-2">
+                  <h1 class="text-xs sm:text-sm md:text-lg lg:text-xl xl:text-2xl font-bold tracking-wide text-center truncate max-w-[60%] sm:max-w-[70%]" style="color:  #15803d;">
+                      <span class="hidden sm:inline"> Post-Harvest Storage Guide - </span>एग्रो रक्षक
+                  </h1>
+              </div>
+
+              <!-- Right: Regular User -->
+              <div class="text-xs sm:text-sm font-medium flex-shrink-0" style="color:  #15803d;">
+                  <span class="hidden sm:inline">Regular User</span>
+                  <span class="sm:hidden">User</span>
+              </div>
+          </div>
+      </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container mx-auto px-2 sm:px-4 md:px-6 py-3 sm:py-4 max-w-6xl mt-14 sm:mt-16">
+      
+      <!-- Logo Box (Moved from header) -->
+      <div class="rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 mb-3 sm:mb-4 border-l-4 transition-all duration-300 hover:shadow-2xl" style="background: white; box-shadow: var(--shadow-lg); border-color: var(--primary-color);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='translateY(0)'">
+          <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
+              <div class="relative">
+                  <img src="logo.png" alt="Agro Rakshak Logo" class="h-12 sm:h-16 md:h-20 w-auto transition-transform duration-300 hover:scale-105" style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; filter: none; -webkit-filter: none;">
+              </div>
+              <div class="flex-1 text-center sm:text-left">
+                  <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1" style="color: var(--primary-color);">एग्रो रक्षक</h1>
+                  <p class="text-xs sm:text-sm md:text-base lg:text-lg font-medium" style="color: var(--text-secondary);">
+                      <span class="hidden sm:inline">Post-Harvest Storage Guide - </span>एग्रो रक्षक
+                  </p>
+              </div>
+          </div>
+      </div>
+
+    <centre>
+
+      <div class="flex flex-wrap gap-3 justify-center md:justify-center">
+        <button data-tab="crops" class="tab-btn px-5 py-3 rounded-xl font-semibold focus:outline-none focus:ring-2 focus:ring-green-400 active">
+          Crop Storage Advice
+        </button>
+        <button data-tab="warehouses" class="tab-btn px-5 py-3 rounded-xl font-semibold focus:outline-none focus:ring-2 focus:ring-green-400">
+          Warehouse Locator
+        </button>
+      </div> 
+     </centre>
+
+    <main class="max-w-6xl mx-auto px-6 py-10 space-y-10">
+      <!-- Crop Section -->
+      <section id="crops" class="card-shell rounded-3xl p-6 lg:p-10 space-y-6">
+        <div class="card-elevated rounded-3xl p-6 space-y-6">
+          <div class="flex flex-col md:flex-row md:items-center gap-4 justify-between">
+            <div class="flex items-center gap-3">
+              <span class="badge-icon">
+                <i data-lucide="sprout" class="w-6 h-6"></i>
+              </span>
+              <div>
+                <h2 class="text-2xl font-semibold text-green-700">Select Crop & Advice Type</h2>
+                <p class="text-slate-500 text-sm">Choose from 50+ crops with tailored storage best practices.</p>
+              </div>
+            </div>
+            <span class="badge-pill"><i data-lucide="layers" class="w-4 h-4"></i>50+ Crops</span>
+          </div>
+          <div class="grid gap-4 md:grid-cols-3">
+            <div class="col-span-2">
+              <label for="cropSearch" class="text-sm font-semibold text-slate-600">Search Crop</label>
+              <div class="relative mt-1">
+                <input
+                  id="cropSearch"
+                  type="text"
+                  placeholder="Search by name..."
+                  class="w-full pl-12 pr-4 py-3 rounded-2xl border border-slate-200 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none bg-white"
+                />
+                <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+              </div>
+            </div>
+            <div>
+              <label for="cropTypeFilter" class="text-sm font-semibold text-slate-600">Filter by Crop Type</label>
+              <select
+                id="cropTypeFilter"
+                class="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-green-200 focus:border-green-500 bg-white"
+              >
+                <option value="">All Types</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex justify-end">
+            <button id="scrollAdviceBtn" type="button" class="action-btn">
+              <i data-lucide="book-open-check" class="w-5 h-5"></i>
+              Browse Advice
+            </button>
+          </div>
+        </div>
+
+        <div class="card-elevated rounded-3xl p-6 space-y-4" id="advicePanel">
+          <div class="flex flex-col md:flex-row md:items-center justify-between text-sm text-slate-600 gap-2">
+            <p>Showing <span id="cropCount">0</span> crops</p>
+            <p>Tap any card to reveal moisture, humidity, and storage life insights.</p>
+          </div>
+          <div id="cropsGrid" class="grid gap-4 md:grid-cols-2 xl:grid-cols-3"></div>
+          <p id="cropEmpty" class="hidden text-center text-slate-500">No crops match your search or type filter.</p>
+        </div>
+      </section>
+
+      <!-- Warehouse Section -->
+      <section id="warehouses" class="hidden card-shell rounded-3xl p-6 lg:p-10 space-y-8">
+        <div class="card-elevated rounded-3xl p-6 space-y-6">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <span class="badge-icon">
+                <i data-lucide="warehouse" class="w-6 h-6"></i>
+              </span>
+              <div>
+                <h2 class="text-2xl font-semibold text-green-700">Warehouse Locator</h2>
+                <p class="text-slate-500 text-sm">WDRA augmented data (2021-22) with live facility snapshots.</p>
+              </div>
+            </div>
+            <span class="badge-pill"><i data-lucide="map" class="w-4 h-4"></i>Pan India</span>
+          </div>
+          <div class="grid gap-4 md:grid-cols-2">
+            <div>
+              <label for="stateSelect" class="text-sm font-semibold text-slate-600">Select State</label>
+              <select
+                id="stateSelect"
+                class="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-green-200 focus:border-green-500 bg-white"
+              ></select>
+            </div>
+            <div>
+              <label for="storageTypeFilter" class="text-sm font-semibold text-slate-600">Facility Type</label>
+              <select
+                id="storageTypeFilter"
+                class="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 focus:ring-2 focus:ring-green-200 focus:border-green-500 bg-white"
+              >
+                <option value="any">Any</option>
+                <option value="cold storage">Cold Storage</option>
+                <option value="warehouse">Warehouse</option>
+                <option value="steel silo">Steel Silo</option>
+              </select>
+            </div>
+          </div>
+          <p id="stateMessage" class="text-sm text-slate-500">Choose a state to view WDRA insights.</p>
+        </div>
+
+        <div class="card-elevated rounded-3xl p-6 space-y-6">
+          <div class="grid gap-6 lg:grid-cols-3">
+            <div class="lg:col-span-2 space-y-6">
+              <div class="grid gap-4 md:grid-cols-2" id="stateSummary"></div>
+              <div>
+                <div class="flex items-center gap-2 text-slate-700 font-semibold text-lg">
+                  <i data-lucide="truck" class="w-5 h-5 text-green-600"></i>
+                  Nearest Warehouses
+                </div>
+                <div id="facilityList" class="grid gap-4 md:grid-cols-2 mt-4"></div>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <h3 class="text-xl font-semibold text-slate-700 flex items-center gap-2">
+                <i data-lucide="map-pin" class="w-5 h-5 text-green-600"></i>
+                Map Preview
+              </h3>
+              <div class="h-64 rounded-2xl border border-green-100 overflow-hidden shadow-inner">
+                <iframe
+                  title="India warehouse coverage map"
+                  class="w-full h-full"
+                  src="https://www.openstreetmap.org/export/embed.html?bbox=68.094%2C6.462%2C97.395%2C35.675&layer=mapnik"
+                  style="border:0"
+                  loading="lazy"
+                ></iframe>
+              </div>
+              <p class="text-xs text-slate-500">Pan and zoom inside the map to explore different states.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="flex flex-row justify-center items-center bg-green-600 w-full h-[5vw] text-white">
+      
+          <p class="text-xs sm:text-sm">© 2025 Agro Rakshak. <span class="hidden sm:inline">Empowering Farmers with Smart Agriculture.</span><span class="sm:hidden">Smart Agriculture.</span></p>
+    
+  </footer>
+
+
+    <script>
+      const API_KEY = "579b464db66ec23bdd000001ad232873745e4aa145869c604eaf1299";
+
+      const cropData = [
+        { name: "Wheat", type: "Cereal", temp: "15‑20°C", humidity: "≤12% grain moisture", life: "12 months", precautions: "Stack on pallets, fumigate every 45 days." },
+        { name: "Rice (Paddy)", type: "Cereal", temp: "18‑22°C", humidity: "14% grain moisture", life: "10 months", precautions: "Aerate weekly to avoid fungal growth." },
+        { name: "Maize", type: "Cereal", temp: "15‑18°C", humidity: "≤13%", life: "9 months", precautions: "Use PICS bags to arrest weevils." },
+        { name: "Sorghum", type: "Cereal", temp: "15‑18°C", humidity: "≤12%", life: "8 months", precautions: "Ventilate bi-weekly to limit heating." },
+        { name: "Pearl Millet", type: "Cereal", temp: "12‑16°C", humidity: "≤12%", life: "7 months", precautions: "Double-line gunny bags with LDPE." },
+        { name: "Barley", type: "Cereal", temp: "12‑15°C", humidity: "≤12%", life: "10 months", precautions: "Store in cool godowns to maintain malt quality." },
+        { name: "Chickpea", type: "Pulse", temp: "12‑18°C", humidity: "≤10%", life: "10 months", precautions: "Metal bins with neem leaves deter bruchids." },
+        { name: "Pigeon Pea", type: "Pulse", temp: "16‑20°C", humidity: "≤11%", life: "8 months", precautions: "Phosphine fumigation every 60 days." },
+        { name: "Green Gram", type: "Pulse", temp: "15‑20°C", humidity: "≤10%", life: "8 months", precautions: "Triple-layer PICS bags for weevil control." },
+        { name: "Black Gram", type: "Pulse", temp: "15‑20°C", humidity: "≤11%", life: "7 months", precautions: "Blend dried neem/castor leaves for pest deterrence." },
+        { name: "Lentil", type: "Pulse", temp: "12‑18°C", humidity: "≤11%", life: "10 months", precautions: "Hermetic storage with phosphine tablets." },
+        { name: "Soybean", type: "Oilseed", temp: "12‑15°C", humidity: "≤11%", life: "6 months", precautions: "Purge with nitrogen to slow rancidity." },
+        { name: "Groundnut (pod)", type: "Oilseed", temp: "10‑15°C", humidity: "≤8%", life: "7 months", precautions: "Turn stacks weekly; keep RH <65%." },
+        { name: "Mustard", type: "Oilseed", temp: "10‑12°C", humidity: "≤8%", life: "10 months", precautions: "Use airtight bins to avoid oxidation." },
+        { name: "Sunflower", type: "Oilseed", temp: "8‑12°C", humidity: "≤8%", life: "6 months", precautions: "Monitor FFA count, aerate frequently." },
+        { name: "Sesame", type: "Oilseed", temp: "8‑10°C", humidity: "≤8%", life: "9 months", precautions: "Opaque HDPE drums protect from light." },
+        { name: "Cotton (lint)", type: "Fiber", temp: "Ambient dry", humidity: "8‑10%", life: "12 months", precautions: "Keep bales on dunnage, avoid moisture." },
+        { name: "Sugarcane", type: "Commercial", temp: "15‑20°C", humidity: "≥70% RH", life: "48 hrs", precautions: "Process quickly; cover billets with wet gunny." },
+        { name: "Potato", type: "Tuber", temp: "2‑4°C", humidity: "90‑95% RH", life: "6 months", precautions: "Cure 10 days at 18°C before cold storage." },
+        { name: "Onion", type: "Bulb", temp: "28‑30°C", humidity: "65‑70% RH", life: "3 months", precautions: "Use ventilated racks, limit stack height." },
+        { name: "Garlic", type: "Bulb", temp: "0‑2°C", humidity: "65‑70% RH", life: "6 months", precautions: "Hang braids with forced airflow." },
+        { name: "Tomato", type: "Vegetable", temp: "12‑13°C", humidity: "85‑90% RH", life: "3 weeks", precautions: "Avoid ethylene exposure for mature-green fruit." },
+        { name: "Brinjal (Eggplant)", type: "Vegetable", temp: "8‑10°C", humidity: "90‑95% RH", life: "2 weeks", precautions: "Use padded crates to prevent bruising." },
+        { name: "Cabbage", type: "Vegetable", temp: "0‑1°C", humidity: "95% RH", life: "2 months", precautions: "Wrap heads in perforated film." },
+        { name: "Cauliflower", type: "Vegetable", temp: "0‑1°C", humidity: "95% RH", life: "4 weeks", precautions: "Hydro-cool before storage to slow browning." },
+        { name: "Okra", type: "Vegetable", temp: "8‑10°C", humidity: "95% RH", life: "10 days", precautions: "Breathable clamshells reduce desiccation." },
+        { name: "Bitter Gourd", type: "Vegetable", temp: "12‑13°C", humidity: "90‑95% RH", life: "14 days", precautions: "Pre-cool and wrap with perforated film." },
+        { name: "Bottle Gourd", type: "Vegetable", temp: "10‑12°C", humidity: "90% RH", life: "3 weeks", precautions: "Use foam-net sleeves to avoid scarring." },
+        { name: "Pumpkin", type: "Vegetable", temp: "10‑12°C", humidity: "60‑70% RH", life: "3 months", precautions: "Cure rind 10 days before storage." },
+        { name: "Carrot", type: "Root", temp: "0‑1°C", humidity: "95‑98% RH", life: "4 months", precautions: "Store in perforated polybag with crushed ice." },
+        { name: "Beetroot", type: "Root", temp: "0‑1°C", humidity: "95% RH", life: "4 months", precautions: "Maintain high RH to avoid shriveling." },
+        { name: "Mango", type: "Fruit", temp: "12‑13°C", humidity: "85‑90% RH", life: "3 weeks", precautions: "Hot-water dip + MAP liners." },
+        { name: "Banana", type: "Fruit", temp: "13‑14°C", humidity: "90‑95% RH", life: "4 weeks", precautions: "Ethylene scrubbers during transit." },
+        { name: "Apple", type: "Fruit", temp: "0‑1°C", humidity: "90‑95% RH", life: "8 months", precautions: "Controlled atmosphere 2% O₂, 2% CO₂." },
+        { name: "Grapes", type: "Fruit", temp: "0‑1°C", humidity: "90‑95% RH", life: "8 weeks", precautions: "SO₂ pads plus perforated liners." },
+        { name: "Pomegranate", type: "Fruit", temp: "5‑7°C", humidity: "90‑95% RH", life: "12 weeks", precautions: "Light wax coating minimizes shrinkage." },
+        { name: "Guava", type: "Fruit", temp: "5‑8°C", humidity: "90% RH", life: "3 weeks", precautions: "Fungicidal dip + forced-air cooling." },
+        { name: "Papaya", type: "Fruit", temp: "7‑10°C", humidity: "90% RH", life: "3 weeks", precautions: "Hot-water treat to control anthracnose." },
+        { name: "Sapota (Chikoo)", type: "Fruit", temp: "12‑13°C", humidity: "85‑90% RH", life: "3 weeks", precautions: "Pre-cool and store in MAP pouches." },
+        { name: "Litchi", type: "Fruit", temp: "1‑2°C", humidity: "95% RH", life: "4 weeks", precautions: "SO₂ fumigation prevents browning." },
+        { name: "Orange", type: "Fruit", temp: "3‑4°C", humidity: "85‑90% RH", life: "10 weeks", precautions: "Maintain ventilation to reduce mold." },
+        { name: "Turmeric", type: "Spice", temp: "10‑12°C", humidity: "70% RH", life: "10 months", precautions: "Sulfur fumigation in dark rooms." },
+        { name: "Ginger", type: "Spice", temp: "12‑14°C", humidity: "85% RH", life: "5 months", precautions: "Layer rhizomes with dry sand." },
+        { name: "Cardamom", type: "Spice", temp: "10‑12°C", humidity: "55% RH", life: "12 months", precautions: "Moisture-proof tins, low light." },
+        { name: "Black Pepper", type: "Spice", temp: "25°C", humidity: "11% seed moisture", life: "12 months", precautions: "Gunny bags lined with polyethylene." },
+        { name: "Coriander", type: "Spice", temp: "25°C", humidity: "9% moisture", life: "10 months", precautions: "Rotate stacks monthly to prevent heating." },
+        { name: "Cumin", type: "Spice", temp: "20‑25°C", humidity: "8% moisture", life: "9 months", precautions: "Food-grade HDPE drums with silica gel." },
+        { name: "Fennel", type: "Spice", temp: "20‑25°C", humidity: "9% moisture", life: "10 months", precautions: "Cool, dark godowns to retain volatile oils." },
+        { name: "Red Chilli (Dry)", type: "Spice", temp: "25°C", humidity: "≤10% moisture", life: "12 months", precautions: "Use sulfur fumigation against mould." },
+        { name: "Cashew Kernel", type: "Nut", temp: "5‑7°C", humidity: "50% RH", life: "9 months", precautions: "Vacuum pack with oxygen absorbers." },
+        { name: "Coconut (copra)", type: "Commercial", temp: "25°C", humidity: "8% moisture", life: "10 months", precautions: "Store above ground with aeration." },
+        { name: "Tea (made)", type: "Plantation", temp: "Cool & dry", humidity: "≤3% moisture", life: "12 months", precautions: "Aluminium-lined chests, no cross-odour." },
+        { name: "Coffee (parchment)", type: "Plantation", temp: "18‑22°C", humidity: "10‑11% moisture", life: "10 months", precautions: "Sisal bags on pallets, low humidity." },
+        { name: "Cocoa Beans", type: "Plantation", temp: "15‑20°C", humidity: "7% moisture", life: "12 months", precautions: "Jute bags in ventilated godowns." }
+      ];
+
+      const stateData = {
+        "Uttar Pradesh": {
+          units: "2,406 units",
+          capacity: "14.7 M MT",
+          crops: ["Wheat", "Paddy", "Potato"],
+          facilities: [
+            { name: "Lucknow WDRA Mega Warehouse", city: "Lucknow", phone: "+91-522-231-8877", type: "Cold Storage" },
+            { name: "Varanasi Agro Cold Hub", city: "Varanasi", phone: "+91-542-233-2211", type: "Cold Storage" },
+            { name: "Meerut Smart Silo Complex", city: "Meerut", phone: "+91-121-240-9988", type: "Steel Silo" }
+          ]
+        },
+        "West Bengal": {
+          units: "514 units",
+          capacity: "5.9 M MT",
+          crops: ["Paddy", "Potato", "Jute"],
+          facilities: [
+            { name: "Siliguri Integrated Cold Chain", city: "Siliguri", phone: "+91-353-264-1177", type: "Cold Storage" },
+            { name: "Howrah Riverfront Warehouse", city: "Howrah", phone: "+91-33-2666-1234", type: "Warehouse" },
+            { name: "Kharagpur Grain Logistics", city: "Kharagpur", phone: "+91-3222-230-555", type: "Warehouse" }
+          ]
+        },
+        Gujarat: {
+          units: "969 units",
+          capacity: "3.8 M MT",
+          crops: ["Groundnut", "Cotton", "Cumin"],
+          facilities: [
+            { name: "Ahmedabad Agrilogic Park", city: "Ahmedabad", phone: "+91-79-2684-9900", type: "Warehouse" },
+            { name: "Rajkot Cold Sphere", city: "Rajkot", phone: "+91-281-255-4411", type: "Cold Storage" },
+            { name: "Surat Spice Vault", city: "Surat", phone: "+91-261-276-3344", type: "Cold Storage" }
+          ]
+        },
+        Punjab: {
+          units: "697 units",
+          capacity: "2.3 M MT",
+          crops: ["Wheat", "Paddy", "Maize"],
+          facilities: [
+            { name: "Amritsar Grain Terminal", city: "Amritsar", phone: "+91-183-250-7788", type: "Warehouse" },
+            { name: "Ludhiana Chill Chain", city: "Ludhiana", phone: "+91-161-252-1100", type: "Cold Storage" },
+            { name: "Bathinda Multi-Silo", city: "Bathinda", phone: "+91-164-229-0077", type: "Steel Silo" }
+          ]
+        },
+        "Andhra Pradesh": {
+          units: "405 units",
+          capacity: "15.6 M MT",
+          crops: ["Paddy", "Chillies", "Mango"],
+          facilities: [
+            { name: "Guntur Spice Park", city: "Guntur", phone: "+91-863-222-3115", type: "Cold Storage" },
+            { name: "Vizag Coastal Cold Store", city: "Visakhapatnam", phone: "+91-891-254-0099", type: "Cold Storage" },
+            { name: "Kurnool Mega Warehouse", city: "Kurnool", phone: "+91-8518-255-455", type: "Warehouse" }
+          ]
+        },
+        Maharashtra: {
+          units: "1,180 units",
+          capacity: "8.4 M MT",
+          crops: ["Grapes", "Cotton", "Soybean"],
+          facilities: [
+            { name: "Nashik Viticool Cluster", city: "Nashik", phone: "+91-253-223-1188", type: "Cold Storage" },
+            { name: "Pune Mahafed Logistics", city: "Pune", phone: "+91-20-2693-2244", type: "Warehouse" },
+            { name: "Nagpur Multi-Modal Storage", city: "Nagpur", phone: "+91-712-237-1190", type: "Warehouse" }
+          ]
+        },
+        Karnataka: {
+          units: "540 units",
+          capacity: "4.1 M MT",
+          crops: ["Coffee", "Maize", "Tomato"],
+          facilities: [
+            { name: "Doddaballapura Cold Campus", city: "Bengaluru Rural", phone: "+91-80-2763-4411", type: "Cold Storage" },
+            { name: "Hubballi Grain Care", city: "Hubballi", phone: "+91-836-225-6677", type: "Warehouse" },
+            { name: "Mysuru Fresh Vault", city: "Mysuru", phone: "+91-821-244-7788", type: "Cold Storage" }
+          ]
+        }
+      };
+
+      const stateSelect = document.getElementById("stateSelect");
+      const stateSummary = document.getElementById("stateSummary");
+      const facilityList = document.getElementById("facilityList");
+      const stateMessage = document.getElementById("stateMessage");
+      const storageTypeFilter = document.getElementById("storageTypeFilter");
+
+      const cropsGrid = document.getElementById("cropsGrid");
+      const cropSearch = document.getElementById("cropSearch");
+      const cropEmpty = document.getElementById("cropEmpty");
+      const cropTypeFilter = document.getElementById("cropTypeFilter");
+      const cropCount = document.getElementById("cropCount");
+      const scrollAdviceBtn = document.getElementById("scrollAdviceBtn");
+      const advicePanel = document.getElementById("advicePanel");
+
+      let currentStateSelection = "";
+      let currentStorageFilter = "any";
+
+      const renderCrops = (list) => {
+        cropsGrid.innerHTML = "";
+        if (!list.length) {
+          cropEmpty.classList.remove("hidden");
+          cropCount.textContent = 0;
+          return;
+        }
+        cropCount.textContent = list.length;
+        cropEmpty.classList.add("hidden");
+        list.forEach((crop) => {
+          const card = document.createElement("article");
+          card.className =
+            "border border-green-100 rounded-2xl p-4 bg-white shadow-sm hover:shadow-lg transition group cursor-pointer flex flex-col gap-3";
+          card.innerHTML = `
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-lg font-semibold text-green-700">${crop.name}</h3>
+                <p class="text-sm text-slate-500">${crop.type}</p>
+              </div>
+              <i data-lucide="plus" class="w-5 h-5 text-green-600 transition group-[.open]:rotate-45"></i>
+            </div>
+            <dl class="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-slate-600">
+              <div>
+                <dt class="font-semibold">Temperature</dt>
+                <dd>${crop.temp}</dd>
+              </div>
+              <div>
+                <dt class="font-semibold">Humidity</dt>
+                <dd>${crop.humidity}</dd>
+              </div>
+            </dl>
+            <div class="mt-2 hidden text-sm text-slate-600 group-[.open]:block">
+              <p><span class="font-semibold">Storage Life:</span> ${crop.life}</p>
+              <p class="mt-1"><span class="font-semibold">Precautions:</span> ${crop.precautions}</p>
+            </div>
+          `;
+          card.addEventListener("click", () => {
+            card.classList.toggle("open");
+            lucide.createIcons();
+          });
+          cropsGrid.appendChild(card);
+        });
+        lucide.createIcons();
+      };
+
+      const populateCropTypes = () => {
+        const uniqueTypes = Array.from(new Set(cropData.map((crop) => crop.type))).sort();
+        uniqueTypes.forEach((type) => {
+          const option = document.createElement("option");
+          option.value = type;
+          option.textContent = type;
+          cropTypeFilter.appendChild(option);
+        });
+      };
+
+      const filterCrops = () => {
+        const term = cropSearch.value.trim().toLowerCase();
+        const type = cropTypeFilter.value;
+        const filtered = cropData.filter((crop) => {
+          const matchesTerm =
+            !term ||
+            crop.name.toLowerCase().includes(term) ||
+            crop.type.toLowerCase().includes(term);
+          const matchesType = !type || crop.type === type;
+          return matchesTerm && matchesType;
+        });
+        renderCrops(filtered);
+      };
+
+      const populateStates = () => {
+        stateSelect.innerHTML = `<option value="">Select a state</option>`;
+        Object.keys(stateData)
+          .sort()
+          .forEach((state) => {
+            const opt = document.createElement("option");
+            opt.value = state;
+            opt.textContent = state;
+            stateSelect.appendChild(opt);
+          });
+      };
+
+      const renderStateDetails = () => {
+        if (!currentStateSelection || !stateData[currentStateSelection]) {
+          stateSummary.innerHTML = "";
+          facilityList.innerHTML = "";
+          stateMessage.textContent = "Choose a state to view WDRA insights.";
+          return;
+        }
+
+        const data = stateData[currentStateSelection];
+        const facilities = data.facilities.filter((facility) => {
+          if (currentStorageFilter === "any") return true;
+          return (facility.type || "").toLowerCase() === currentStorageFilter;
+        });
+        stateSummary.innerHTML = `
+          <div class="rounded-2xl bg-green-50 border border-green-100 p-4">
+            <p class="text-sm text-slate-500">Total Units</p>
+            <p class="text-2xl font-bold text-green-700">${data.units}</p>
+          </div>
+          <div class="rounded-2xl bg-green-50 border border-green-100 p-4">
+            <p class="text-sm text-slate-500">Capacity</p>
+            <p class="text-2xl font-bold text-green-700">${data.capacity}</p>
+          </div>
+          <div class="rounded-2xl bg-green-50 border border-green-100 p-4 col-span-2">
+            <p class="text-sm text-slate-500">Primary Crops</p>
+            <p class="font-semibold text-slate-700">${data.crops.join(", ")}</p>
+          </div>
+        `;
+
+        facilityList.innerHTML = "";
+        if (!facilities.length) {
+          facilityList.innerHTML =
+            "<p class='text-sm text-slate-500'>No facilities match this filter. Try another type.</p>";
+        }
+        facilities.forEach((facility) => {
+          const card = document.createElement("article");
+          card.className = "border border-slate-200 rounded-2xl p-4 bg-white shadow-sm flex flex-col gap-2";
+          const directionsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+            facility.name + " " + facility.city
+          )}`;
+          card.innerHTML = `
+            <div class="flex items-center justify-between gap-2">
+              <h4 class="text-lg font-semibold text-green-700">${facility.name}</h4>
+              <span class="badge-pill">${facility.type || "Facility"}</span>
+            </div>
+            <p class="text-sm text-slate-500">${facility.city}</p>
+            <p class="text-sm flex items-center gap-2 text-slate-600">
+              <i data-lucide="phone" class="w-4 h-4 text-green-600"></i>${facility.phone}
+            </p>
+            <div class="mt-2 flex gap-2">
+              <button class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-green-600 text-white font-semibold focus:outline-none focus:ring-2 focus:ring-green-400">
+                <i data-lucide="bus" class="w-4 h-4"></i>
+                Contact
+              </button>
+              <a href="${directionsUrl}" target="_blank" class="flex-1 text-center inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl border border-green-200 text-green-700 font-semibold">
+                <i data-lucide="navigation" class="w-4 h-4"></i>
+                Get Directions
+              </a>
+            </div>
+          `;
+          facilityList.appendChild(card);
+        });
+
+        stateMessage.textContent = `Showing augmented 2021-22 data for ${currentStateSelection}.`;
+        lucide.createIcons();
+      };
+
+      document.querySelectorAll(".tab-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const target = btn.dataset.tab;
+          document.querySelectorAll(".tab-btn").forEach((b) => {
+            b.classList.remove("active");
+            if (b === btn) b.classList.add("active");
+          });
+
+          document.getElementById("crops").classList.toggle("hidden", target !== "crops");
+          document.getElementById("warehouses").classList.toggle("hidden", target !== "warehouses");
+        });
+      });
+
+      cropSearch.addEventListener("input", filterCrops);
+      cropTypeFilter.addEventListener("change", filterCrops);
+      if (scrollAdviceBtn) {
+        scrollAdviceBtn.addEventListener("click", () => {
+          advicePanel.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
+
+      stateSelect.addEventListener("change", (e) => {
+        currentStateSelection = e.target.value;
+        renderStateDetails();
+      });
+      storageTypeFilter.addEventListener("change", (e) => {
+        currentStorageFilter = e.target.value;
+        renderStateDetails();
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        populateCropTypes();
+        filterCrops();
+        populateStates();
+        renderStateDetails();
+        lucide.createIcons();
+      });
+    </script>
+  </body>
+</html>

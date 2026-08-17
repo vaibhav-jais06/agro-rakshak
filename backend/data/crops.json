@@ -1,0 +1,76 @@
+[
+  {
+    "name": "Rice",
+    "scientificName": "Oryza sativa",
+    "category": "Cereal",
+    "season": "Kharif",
+    "soilRequirement": ["Alluvial Soil", "Black Soil"],
+    "waterRequirement": "High",
+    "temperature": { "min": 20, "max": 35 },
+    "duration": 120,
+    "yieldPotential": 25,
+    "diseases": [
+      {
+        "name": "Blast",
+        "symptoms": "Diamond-shaped lesions on leaves",
+        "treatment": "Apply Tricyclazole @ 0.6g/liter"
+      },
+      {
+        "name": "Sheath Blight",
+        "symptoms": "Oval or irregular spots on leaf sheath",
+        "treatment": "Apply Validamycin @ 2ml/liter"
+      }
+    ],
+    "fertilizers": [
+      { "type": "Urea", "quantity": "60 kg/acre", "timing": "Basal + Tillering + Panicle" },
+      { "type": "DAP", "quantity": "40 kg/acre", "timing": "Basal" },
+      { "type": "Potash", "quantity": "30 kg/acre", "timing": "Basal + Panicle" }
+    ]
+  },
+  {
+    "name": "Wheat",
+    "scientificName": "Triticum aestivum",
+    "category": "Cereal",
+    "season": "Rabi",
+    "soilRequirement": ["Alluvial Soil", "Black Soil"],
+    "waterRequirement": "Medium",
+    "temperature": { "min": 10, "max": 25 },
+    "duration": 110,
+    "yieldPotential": 20,
+    "diseases": [
+      {
+        "name": "Rust",
+        "symptoms": "Orange-brown pustules on leaves",
+        "treatment": "Apply Propiconazole @ 1ml/liter"
+      }
+    ],
+    "fertilizers": [
+      { "type": "Urea", "quantity": "50 kg/acre", "timing": "Basal + CRI + Flowering" },
+      { "type": "DAP", "quantity": "50 kg/acre", "timing": "Basal" },
+      { "type": "Potash", "quantity": "25 kg/acre", "timing": "Basal" }
+    ]
+  },
+  {
+    "name": "Cotton",
+    "scientificName": "Gossypium",
+    "category": "Cash Crop",
+    "season": "Kharif",
+    "soilRequirement": ["Black Soil", "Red Soil"],
+    "waterRequirement": "Medium",
+    "temperature": { "min": 21, "max": 30 },
+    "duration": 180,
+    "yieldPotential": 15,
+    "diseases": [
+      {
+        "name": "Wilt",
+        "symptoms": "Yellowing and wilting of leaves",
+        "treatment": "Use resistant varieties, soil treatment"
+      }
+    ],
+    "fertilizers": [
+      { "type": "Urea", "quantity": "40 kg/acre", "timing": "Basal + Flowering + Boll" },
+      { "type": "DAP", "quantity": "30 kg/acre", "timing": "Basal" },
+      { "type": "Potash", "quantity": "30 kg/acre", "timing": "Basal + Flowering" }
+    ]
+  }
+]

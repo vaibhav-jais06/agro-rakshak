@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Hub - एग्रो रक्षक</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #2d5016;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #4a7c2a;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2d5016;
+            text-align: center;
+            flex: 1;
+        }
+
+        .user-info {
+            color: #2d5016;
+            font-weight: 500;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Page Header Section */
+        .page-header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            color: #2e5e0e;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .page-title-section {
+            flex: 1;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2d5016;
+            margin-bottom: 5px;
+        }
+
+        .page-subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* Controls Section */
+        .controls-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 10px 20px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .filter-tab:hover {
+            border-color: #4a7c2a;
+            color: #4a7c2a;
+            transform: translateY(-2px);
+        }
+
+        .filter-tab.active {
+            background: #2d5016;
+            border-color: #2d5016;
+            color: white;
+        }
+
+        .utility-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .voice-assist-btn,
+        .lang-toggle {
+            padding: 10px 20px;
+            border: 2px solid #2d5016;
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #2d5016;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .voice-assist-btn:hover,
+        .lang-toggle:hover {
+            background: #2d5016;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .voice-assist-btn.active {
+            background: #2d5016;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(45, 80, 22, 0.7);
+            }
+
+            50% {
+                box-shadow: 0 0 0 10px rgba(45, 80, 22, 0);
+            }
+        }
+
+        /* Knowledge Grid */
+        .knowledge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .knowledge-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .knowledge-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(45, 80, 22, 0.2);
+        }
+
+        .card-thumbnail {
+            width: 100%;
+            height: 200px;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(45, 80, 22, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .knowledge-card:hover .play-icon {
+            opacity: 1;
+        }
+
+        .difficulty-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .difficulty-badge.beginner {
+            background: #4caf50;
+            color: white;
+        }
+
+        .difficulty-badge.expert {
+            background: #ff9800;
+            color: white;
+        }
+
+        .card-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d5016;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .card-category {
+            font-size: 12px;
+            color: #666;
+            background: #f5f5f5;
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+
+        .play-video-btn {
+            padding: 8px 16px;
+            background: #2d5016;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .play-video-btn:hover {
+            background: #4a7c2a;
+            transform: scale(1.05);
+        }
+
+        /* Empty State */
+        .empty-state {
+            background: white;
+            border-radius: 15px;
+            padding: 60px 30px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            color: #2d5016;
+            margin-bottom: 20px;
+        }
+
+        .empty-state-text {
+            font-size: 18px;
+            color: #2d5016;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .empty-state-subtext {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        footer {
+            background: #204708;
+            padding: 25px 30px;
+            margin-top: 40px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            color: white;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: #c8e6c9;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .page-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .controls-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-tabs {
+                justify-content: center;
+            }
+
+            .utility-buttons {
+                justify-content: center;
+            }
+
+            .knowledge-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation for cards */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .knowledge-card {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .knowledge-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .knowledge-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .knowledge-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .knowledge-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .knowledge-card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .knowledge-card:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <a href="/" class="back-link">
+                <span>←</span>
+                <span>Back to Portal</span>
+            </a>
+            <div class="header-title">Knowledge Hub - एग्रो रक्षक</div>
+            <div class="user-info">Regular User</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <img src="logo.png" alt="Agro Rakshak Logo">
+                </div>
+                <div class="logo-text"></div>
+            </div>
+            <div class="page-title-section">
+                <div class="page-title">एग्रो रक्षक</div>
+                <div class="page-subtitle">Smart Knowledge Hub - Learn Modern Farming Techniques</div>
+            </div>
+        </div>
+
+        <!-- Controls Section -->
+        <div class="controls-section">
+            <div class="filter-tabs">
+                <div class="filter-tab active" data-category="all">All Topics</div>
+                <div class="filter-tab" data-category="protective-cultivation">Protective Cultivation</div>
+                <div class="filter-tab" data-category="polyhouses">Polyhouses</div>
+                <div class="filter-tab" data-category="drip-irrigation">Drip Irrigation</div>
+                <div class="filter-tab" data-category="organic-farming">Organic Farming</div>
+            </div>
+            <div class="utility-buttons">
+                <button class="voice-assist-btn" id="voiceAssistBtn">
+                    <span>🎤</span>
+                    <span>Voice Assist</span>
+                </button>
+                <button class="lang-toggle" id="langToggle">
+                    <span>🌐</span>
+                    <span>English</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Knowledge Grid -->
+        <div class="knowledge-grid" id="knowledgeGrid">
+            <!-- Cards will be populated by JavaScript -->
+        </div>
+
+        <!-- Empty State (hidden by default) -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <div class="empty-state-icon">📚</div>
+            <div class="empty-state-text">No tutorials found</div>
+            <div class="empty-state-subtext">Try selecting a different category</div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#" class="footer-link">About Us</a>
+                <a href="#" class="footer-link">Contact</a>
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+            </div>
+            <p>&copy; 2025 Agro Rakshak. Empowering Farmers with Smart Agriculture .</p>
+        </div>
+    </footer>
+
+    <script>
+        // Knowledge Data Array with YouTube Video IDs
+        // Note: Replace these with actual YouTube video IDs from your farming tutorial videos
+        const knowledgeData = [
+            {
+                id: 1,
+                title: "Introduction to Protective Cultivation Techniques",
+                category: "protective-cultivation",
+                difficulty: "beginner",
+                videoId: "tS8xrD5Y7oU" // Protective cultivation tutorial
+            },
+            {
+                id: 2,
+                title: "Advanced Polyhouse Setup and Management",
+                category: "polyhouses",
+                difficulty: "expert",
+                videoId: "quMNdpNatuM" // Polyhouse setup tutorial
+            },
+            {
+                id: 3,
+                title: "Drip Irrigation System Installation Guide",
+                category: "drip-irrigation",
+                difficulty: "beginner",
+                videoId: "RnrfS8YioSg" // Drip irrigation installation
+            },
+            {
+                id: 4,
+                title: "Organic Farming: Composting and Soil Health",
+                category: "organic-farming",
+                difficulty: "beginner",
+                videoId: "30Jw3d7Cy5M" // Organic farming composting
+            },
+            {
+                id: 5,
+                title: "Optimizing Crop Yield in Polyhouses",
+                category: "polyhouses",
+                difficulty: "expert",
+                videoId: "hkxS1wp7BRM" // Polyhouse optimization
+            },
+            {
+                id: 6,
+                title: "Water Conservation with Smart Drip Systems",
+                category: "drip-irrigation",
+                difficulty: "expert",
+                videoId: "tA80HqSiX-8" // Smart drip systems
+            },
+            {
+                id: 7,
+                title: "Protective Cultivation for High-Value Crops",
+                category: "protective-cultivation",
+                difficulty: "expert",
+                videoId: "N2395BTBoqQ" // High-value crops
+            },
+            {
+                id: 8,
+                title: "Organic Pest Management Strategies",
+                category: "organic-farming",
+                difficulty: "beginner",
+                videoId: "Uo05345F1C8" // Organic pest management
+            }
+        ];
+
+        // Language data
+        const languages = {
+            english: {
+                all: "All Topics",
+                protectiveCultivation: "Protective Cultivation",
+                polyhouses: "Polyhouses",
+                dripIrrigation: "Drip Irrigation",
+                organicFarming: "Organic Farming",
+                voiceAssist: "Voice Assist",
+                playVideo: "Play Video",
+                noTutorials: "No tutorials found",
+                tryDifferent: "Try selecting a different category"
+            },
+            hindi: {
+                all: "सभी विषय",
+                protectiveCultivation: "सुरक्षात्मक खेती",
+                polyhouses: "पॉलीहाउस",
+                dripIrrigation: "ड्रिप सिंचाई",
+                organicFarming: "जैविक खेती",
+                voiceAssist: "आवाज सहायता",
+                playVideo: "वीडियो चलाएं",
+                noTutorials: "कोई ट्यूटोरियल नहीं मिला",
+                tryDifferent: "एक अलग श्रेणी चुनने का प्रयास करें"
+            }
+        };
+
+        let currentCategory = 'all';
+        let currentLang = 'english';
+        let voiceAssistActive = false;
+
+        // Render knowledge cards
+        function renderCards(category = 'all') {
+            const grid = document.getElementById('knowledgeGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            const filteredData = category === 'all'
+                ? knowledgeData
+                : knowledgeData.filter(item => item.category === category);
+
+            grid.innerHTML = '';
+
+            if (filteredData.length === 0) {
+                grid.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            grid.style.display = 'grid';
+            emptyState.style.display = 'none';
+
+            filteredData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'knowledge-card';
+                const thumbnailUrl = `https://img.youtube.com/vi/${item.videoId}/maxresdefault.jpg`;
+                card.innerHTML = `
+                    <div class="card-thumbnail">
+                        <img src="${thumbnailUrl}" alt="${item.title}" onerror="this.src='https://img.youtube.com/vi/${item.videoId}/hqdefault.jpg'">
+                        <div class="difficulty-badge ${item.difficulty}">${item.difficulty}</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">${item.title}</div>
+                        <div class="card-meta">
+                            <span class="card-category">${getCategoryName(item.category)}</span>
+                            <button class="play-video-btn" data-video-id="${item.videoId}">
+                                <span>▶</span>
+                                <span>${languages[currentLang].playVideo}</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Get category name based on current language
+        function getCategoryName(category) {
+            const categoryMap = {
+                'protective-cultivation': languages[currentLang].protectiveCultivation,
+                'polyhouses': languages[currentLang].polyhouses,
+                'drip-irrigation': languages[currentLang].dripIrrigation,
+                'organic-farming': languages[currentLang].organicFarming
+            };
+            return categoryMap[category] || category;
+        }
+
+        // Filter tabs functionality
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', function () {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                currentCategory = this.dataset.category;
+                renderCards(currentCategory);
+            });
+        });
+
+        // Voice Assist functionality
+        document.getElementById('voiceAssistBtn').addEventListener('click', function () {
+            voiceAssistActive = !voiceAssistActive;
+            this.classList.toggle('active');
+
+            if (voiceAssistActive) {
+                // Simulate voice recognition
+                if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                    const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    const recognition = new Recognition();
+                    recognition.lang = currentLang === 'hindi' ? 'hi-IN' : 'en-US';
+                    recognition.start();
+
+                    recognition.onresult = function (event) {
+                        const transcript = event.results[0][0].transcript.toLowerCase();
+                        handleVoiceCommand(transcript);
+                    };
+                } else {
+                    alert('Voice recognition not supported in your browser');
+                    voiceAssistActive = false;
+                    this.classList.remove('active');
+                }
+            }
+        });
+
+        function handleVoiceCommand(command) {
+            const categories = {
+                'all': 'all',
+                'protective cultivation': 'protective-cultivation',
+                'polyhouse': 'polyhouses',
+                'polyhouses': 'polyhouses',
+                'drip irrigation': 'drip-irrigation',
+                'organic farming': 'organic-farming'
+            };
+
+            for (const [key, value] of Object.entries(categories)) {
+                if (command.includes(key)) {
+                    currentCategory = value;
+                    document.querySelectorAll('.filter-tab').forEach(t => {
+                        t.classList.remove('active');
+                        if (t.dataset.category === value) {
+                            t.classList.add('active');
+                        }
+                    });
+                    renderCards(currentCategory);
+                    break;
+                }
+            }
+        }
+
+        // Language toggle functionality
+        document.getElementById('langToggle').addEventListener('click', function () {
+            currentLang = currentLang === 'english' ? 'hindi' : 'english';
+            this.querySelector('span:last-child').textContent = currentLang === 'english' ? 'English' : 'हिंदी';
+
+            // Update filter tabs
+            const tabTexts = {
+                'all': languages[currentLang].all,
+                'protective-cultivation': languages[currentLang].protectiveCultivation,
+                'polyhouses': languages[currentLang].polyhouses,
+                'drip-irrigation': languages[currentLang].dripIrrigation,
+                'organic-farming': languages[currentLang].organicFarming
+            };
+
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                const category = tab.dataset.category;
+                tab.textContent = tabTexts[category];
+            });
+
+            // Update voice assist button
+            document.querySelector('#voiceAssistBtn span:last-child').textContent = languages[currentLang].voiceAssist;
+
+            // Re-render cards to update language
+            renderCards(currentCategory);
+        });
+
+        // Play video button functionality
+        document.addEventListener('click', function (e) {
+            if (e.target.closest('.play-video-btn')) {
+                const btn = e.target.closest('.play-video-btn');
+                const videoId = btn.dataset.videoId;
+                if (videoId) {
+                    window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
+                }
+            } else if (e.target.closest('.play-icon')) {
+                const card = e.target.closest('.knowledge-card');
+                const btn = card.querySelector('.play-video-btn');
+                const videoId = btn.dataset.videoId;
+                if (videoId) {
+                    window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
+                }
+            }
+        });
+
+        // Initialize
+        renderCards();
+    </script>
+</body>
+
+</html>

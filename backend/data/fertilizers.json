@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Urea",
+    "npk": "46-0-0",
+    "type": "Nitrogen",
+    "pricePerKg": 6,
+    "usage": "For leafy growth and green color",
+    "applicationMethod": "Broadcasting or top-dressing",
+    "precautions": "Avoid over-application, can cause lodging"
+  },
+  {
+    "name": "DAP",
+    "npk": "18-46-0",
+    "type": "Phosphorus",
+    "pricePerKg": 27,
+    "usage": "For root development and flowering",
+    "applicationMethod": "Apply at sowing or as basal dose",
+    "precautions": "Keep away from seeds to avoid burning"
+  },
+  {
+    "name": "Potash (MOP)",
+    "npk": "0-0-60",
+    "type": "Potassium",
+    "pricePerKg": 18,
+    "usage": "For fruit quality and disease resistance",
+    "applicationMethod": "Apply as basal or split application",
+    "precautions": "Ensure adequate soil moisture"
+  },
+  {
+    "name": "NPK 10-26-26",
+    "npk": "10-26-26",
+    "type": "Complex",
+    "pricePerKg": 24,
+    "usage": "Balanced nutrition for all crops",
+    "applicationMethod": "Basal application",
+    "precautions": "Store in cool, dry place"
+  }
+]

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/logo.png" />
+    
+    <!-- Mobile-Optimized Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#2d5016" />
+    
+    <!-- Status Bar Styling for Mobile -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta
+      name="description"
+      content="Agro Rakshak - AI-Driven Intelligence for Every Farmer. Enhancing farmer productivity through hyper-personalized, multilingual technology solutions."
+    />
+    <meta name="keywords" content="agriculture, farming, AI, crop diagnosis, weather forecast, soil health, India, farmers" />
+    <meta name="author" content="Team Enactus - 60496" />
+    
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta property="og:title" content="एग्रो रक्षक | Agro Rakshak - AI for Farmers" />
+    <meta property="og:description" content="AI-Driven Agricultural Intelligence Platform for Indian Farmers" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="%PUBLIC_URL%/logo.png" />
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo.png" />
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Noto+Sans+Telugu:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <title>एग्रो रक्षक | Agro Rakshak - AI for Farmers</title>
+    
+    <style>
+      /* Loading Screen Styles */
+      #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #F5F5F7;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease-out;
+      }
+      
+      #loading-screen.hide {
+        opacity: 0;
+        pointer-events: none;
+      }
+      
+      .logo-container {
+        width: 80px;
+        height: 80px;
+        background-color: #1B4332;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 30px -5px rgba(27, 67, 50, 0.2);
+        animation: breathe 2s ease-in-out infinite;
+      }
+
+      @keyframes breathe {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+      }
+      
+      .loading-text {
+        color: #1D1D1F;
+        font-size: 20px;
+        font-weight: 600;
+        margin-top: 24px;
+        font-family: 'Inter', sans-serif;
+        letter-spacing: -0.02em;
+        opacity: 0;
+        animation: fadeIn 0.5s ease-out 0.2s forwards;
+      }
+
+      @keyframes fadeIn {
+        to { opacity: 1; transform: translateY(0); }
+        from { opacity: 0; transform: translateY(10px); }
+      }
+      
+      /* Hide loading screen when React loads */
+      body.loaded #loading-screen {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+      <div class="logo-container">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+          <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+        </svg>
+      </div>
+      <div class="loading-text">Agro Rakshak</div>
+    </div>
+    
+    <!-- No Script Message -->
+    <noscript>
+      <div style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #F5F5F7;
+        color: #1D1D1F;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+        font-family: sans-serif;
+      ">
+        <h1 style="font-size: 48px; margin-bottom: 20px;">⚠️</h1>
+        <h2 style="font-size: 24px; margin-bottom: 10px;">JavaScript Required</h2>
+        <p style="font-size: 16px; max-width: 600px; color: #86868B; line-height: 1.6;">
+          You need to enable JavaScript to run Agro Rakshak.
+        </p>
+      </div>
+    </noscript>
+    
+    <!-- React Root Element -->
+    <div id="root"></div>
+    
+    <!-- Remove Loading Screen Script -->
+    <script>
+      window.addEventListener('load', function() {
+        // Minimal delay to ensure smooth transition
+        setTimeout(function() {
+          document.getElementById('loading-screen').classList.add('hide');
+          document.body.classList.add('loaded');
+        }, 800);
+      });
+    </script>
+  </body>
+</html>

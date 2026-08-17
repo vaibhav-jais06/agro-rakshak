@@ -1,0 +1,273 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light Mode (Apple Inspired) */
+    --color-background: 245 245 247; /* #F5F5F7 */
+    --color-surface: 255 255 255;
+    --color-surface-hover: 242 242 247;
+    --color-text-primary: 29 29 31; /* #1D1D1F */
+    --color-text-secondary: 134 134 139; /* #86868B */
+    --color-border: 210 210 215; /* #D2D2D7 */
+    
+    --color-primary: 27 67 50; /* #1B4332 Forest Green */
+    --color-primary-hover: 45 106 79;
+    --color-primary-light: 64 145 108;
+    --color-primary-surface: 216 243 220; /* Light green tint */
+    
+    --font-sans: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @apply bg-background text-text-primary;
+  overflow-x: hidden;
+}
+
+/* Typography Resets */
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.02em; /* Tight tracking for headings */
+  font-weight: 600;
+  @apply text-text-primary;
+}
+
+p {
+  letter-spacing: -0.01em;
+  line-height: 1.6;
+  @apply text-text-secondary;
+}
+
+/* Minimalist Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--color-border));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--color-text-secondary));
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: rgba(var(--color-surface), 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(var(--color-border), 0.5);
+}
+
+.glass-card {
+  background: rgba(var(--color-surface), 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(var(--color-border), 0.5);
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.04);
+}
+
+/* Smooth Focus States */
+*:focus-visible {
+  outline: 2px solid rgb(var(--color-primary));
+  outline-offset: 2px;
+}
+
+/* Language Specific Overrides */
+:lang(hi), :lang(bn), :lang(te), :lang(ta) {
+  font-family: 'Noto Sans Devanagari', var(--font-sans);
+}
+
+/* Compatibility Layer for AgriShop & Legacy Components */
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white px-6 py-3 rounded-2xl font-medium transition-all duration-300 hover:bg-primary-hover shadow-lg shadow-primary/20 hover:shadow-xl active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .btn-secondary {
+    @apply bg-surface text-text-primary border border-border px-6 py-3 rounded-2xl font-medium transition-all duration-300 hover:bg-surface-hover active:scale-95 flex items-center justify-center gap-2;
+  }
+  
+  .card {
+    @apply bg-surface rounded-3xl shadow-sm border border-border/50 p-6 transition-all duration-300 hover:shadow-md;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all text-text-primary placeholder:text-text-secondary;
+  }
+}
+
+/* ============================================
+   MOBILE & CAPACITOR NATIVE APP OPTIMIZATIONS
+   ============================================ */
+
+/* Safe area insets for devices with notches */
+body {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Prevent overscroll bounce on iOS */
+html, body {
+  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Optimize touch targets for mobile */
+button, a, input, select, textarea {
+  min-height: 44px; /* Apple HIG minimum touch target */
+  touch-action: manipulation; /* Prevent zoom on double-tap */
+}
+
+/* Remove tap highlight on mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+/* Smooth scrolling */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Disable text selection on interactive elements */
+button, .btn-primary, .btn-secondary {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+/* Better active states for touch */
+button:active, .btn-primary:active, .btn-secondary:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
+}
+
+/* Optimize fonts for mobile screens */
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 16px; /* Prevent iOS zoom on input focus */
+  }
+  
+  h1 {
+    font-size: 2rem; /* Smaller headings on mobile */
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  h3 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Full viewport height accounting for mobile browser UI */
+.mobile-full-height {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
+/* Optimized card layouts for mobile */
+@media screen and (max-width: 640px) {
+  .card {
+    @apply p-4 rounded-2xl;
+  }
+  
+  .glass-card {
+    @apply rounded-2xl;
+  }
+}
+
+/* Fix iOS input zoom */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="password"],
+textarea,
+select {
+  font-size: 16px !important; /* Prevents zoom on iOS */
+}
+
+/* Native-like transitions */
+.page-transition {
+  animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Bottom sheet style for mobile modals */
+@media screen and (max-width: 640px) {
+  .modal-content {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 24px 24px 0 0;
+    max-height: 90vh;
+    animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Optimize images for mobile */
+img {
+  max-width: 100%;
+  height: auto;
+  -webkit-user-drag: none;
+}
+
+/* Better spacing for mobile */
+@media screen and (max-width: 640px) {
+  .container {
+    @apply px-4;
+  }
+}
+
+/* Hardware acceleration for smooth animations */
+.animate-element {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Native app status bar spacing */
+.native-header {
+  padding-top: max(env(safe-area-inset-top), 0px);
+}
+
+/* Capacitor splash screen override */
+.capacitor-splash-screen {
+  display: none !important;
+}
