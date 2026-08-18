@@ -20,6 +20,8 @@
     <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
     <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel Deployment" />
   </p>
+
+  <h3>🚀 <a href="https://agro-rakshak.vercel.app" target="_blank">Live Demo: agro-rakshak.vercel.app</a></h3>
 </div>
 
 <br/>
