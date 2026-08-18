@@ -7,10 +7,15 @@ const mongoose = require('mongoose');
 const Diagnosis = require('../models/Diagnosis');
 
 // Configure multer for image upload
-const uploadDir = path.join(__dirname, '../uploads/diagnosis');
+const isVercel = process.env.VERCEL === '1';
+const uploadDir = isVercel ? '/tmp/uploads/diagnosis' : path.join(__dirname, '../uploads/diagnosis');
 // Ensure upload directory exists
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
+try {
+  if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+  }
+} catch (error) {
+  console.warn('Could not create diagnosis upload directory:', error.message);
 }
 
 const storage = multer.diskStorage({

@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const auth = require('../middleware/auth')
 const multer = require('multer')
-const upload = multer({ dest: 'backend/uploads/avatars' })
+const upload = multer({ dest: process.env.VERCEL === '1' ? '/tmp/uploads/avatars' : 'backend/uploads/avatars' })
 const fc = require('../controllers/farmerController')
 
 router.use(auth)
