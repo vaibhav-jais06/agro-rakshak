@@ -13,7 +13,7 @@ const config = {
 
   // Database Configuration
   database: {
-    uri: process.env.MONGODB_URI || 'mongodb://localhost:27017/agro_rakshak',
+    uri: (process.env.MONGODB_URI || 'mongodb://localhost:27017/agro_rakshak').replace(/^"|"$|^'|'$/g, ''),
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true,
