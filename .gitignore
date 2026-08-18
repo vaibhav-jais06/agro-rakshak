@@ -29,7 +29,4 @@ backend/uploads
 
 build-mobile.sh
 capacitor.config.js
-
-postcss.config.js
-tailwind.config.js
 accept-licenses.sh
