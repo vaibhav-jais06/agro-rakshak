@@ -145,7 +145,7 @@ export default function VoiceAssistant({ user }) {
       if (synthesisSupported && autoSpeak) {
         setIsSpeaking(true);
         try {
-          await speechService.speak(response, ttsLang, { rate: ttsRate, pitch: ttsPitch, voiceName: ttsVoiceName });
+          await speechService.speak(stripMarkdown(response), ttsLang, { rate: ttsRate, pitch: ttsPitch, voiceName: ttsVoiceName });
        } catch (ttsError) {
            console.error('TTS Error:', ttsError);
            alert(t('voiceAssistant.textToSpeechFailed'));
@@ -215,6 +215,21 @@ export default function VoiceAssistant({ user }) {
       html = newHtml.join('<br/>').replace(/<br\/>\s*<div/g, '<div').replace(/div>\s*<br\/>/g, 'div>');
     }
     return { __html: html };
+  };
+
+  const stripMarkdown = (text) => {
+    if (!text) return '';
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/\*(.*?)\*/g, '$1')
+      .replace(/<br\s*\/?>/gi, ' ')
+      .replace(/\|/g, ' ')
+      .replace(/---/g, '')
+      .replace(/#/g, '')
+      .replace(/`/g, '')
+      .replace(/\n/g, ' ')
+      .replace(/\s{2,}/g, ' ')
+      .trim();
   };
 
   return (
@@ -311,17 +326,14 @@ export default function VoiceAssistant({ user }) {
                  <span>{t('common.close')}</span>
                </button>
               <button
-                onClick={async () => {
-                  if (!currentResponse || !synthesisSupported) return;
-                  setIsSpeaking(true);
-                  try {
-                    await speechService.speak(currentResponse, ttsLang, { rate: ttsRate, pitch: ttsPitch, voiceName: ttsVoiceName });
-                  } catch (e) {
-                    alert(t('voiceAssistant.textToSpeechFailed'));
-                  } finally {
-                    setIsSpeaking(false);
-                  }
-                }}
+                  onClick={() => {
+                    if (synthesisSupported) {
+                      setIsSpeaking(true);
+                      speechService.speak(stripMarkdown(currentResponse), ttsLang, { rate: ttsRate, pitch: ttsPitch, voiceName: ttsVoiceName })
+                        .catch(() => alert(t('voiceAssistant.textToSpeechFailed')))
+                        .finally(() => setIsSpeaking(false));
+                    }
+                  }}
                  disabled={!currentResponse || isSpeaking}
                  className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all ${
                    !currentResponse || isSpeaking
