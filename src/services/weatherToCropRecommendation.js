@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const DEFAULT_BASE = 'https://agro-rakshak.onrender.com';
+const DEFAULT_BASE = '';
 const ENV_BASE = process.env.REACT_APP_API_BASE;
 const API_BASE = ENV_BASE || DEFAULT_BASE;
 

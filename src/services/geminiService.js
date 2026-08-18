@@ -65,7 +65,7 @@ const geminiService = {
       recordRequest();
 
       const ENV_BASE = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_API_BASE;
-      const DEFAULT_BASE = 'https://agro-rakshak.onrender.com';
+      const DEFAULT_BASE = '';
       const isLocal = window.location.hostname === 'localhost' || window.location.hostname.match(/^[0-9.]+$/);
       const API_BASE_URL = ENV_BASE || (isLocal ? `http://${window.location.hostname}:5000` : DEFAULT_BASE);
 
@@ -105,7 +105,7 @@ const geminiService = {
       }
       
       const ENV_BASE = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_API_BASE;
-      const DEFAULT_BASE = 'https://agro-rakshak.onrender.com';
+      const DEFAULT_BASE = '';
       const isLocal = window.location.hostname === 'localhost' || window.location.hostname.match(/^[0-9.]+$/);
       const API_BASE_URL = ENV_BASE || (isLocal ? `http://${window.location.hostname}:5000` : DEFAULT_BASE);
       return `Sorry, I could not process your request. Error: ${error.message}. Attempted to connect to: ${API_BASE_URL}/api/diagnosis/voice-assist. Please check your internet connection and try again.`;

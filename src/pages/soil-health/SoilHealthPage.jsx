@@ -11,7 +11,7 @@ import SoilQATab from '../../components/soil/SoilQATab';
 
 export default function SoilHealthPage({ user }) {
   const { t } = useTranslation();
-  const API_BASE = process.env.REACT_APP_BACKEND_URL || 'https://agro-rakshak.onrender.com';
+  const API_BASE = process.env.REACT_APP_BACKEND_URL || '';
   const navigate = useNavigate();
   const [locationInfo, setLocationInfo] = useState(null);
   const [loadingLocation, setLoadingLocation] = useState(false);
