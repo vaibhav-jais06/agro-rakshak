@@ -9,8 +9,7 @@
     <a href="#-overview">Overview</a> •
     <a href="#-key-features">Features</a> •
     <a href="#-technology-stack">Tech Stack</a> •
-    <a href="#-getting-started">Getting Started</a> •
-    <a href="#-environment-variables">Environment Setup</a>
+    <a href="#-quick-start">Quick Start</a>
   </p>
 
   <p>
@@ -28,7 +27,7 @@
 
 ## 📖 Overview
 
-**Agro-Rakshak** (meaning *"Agricultural Protector"*) is an end-to-end, multilingual platform designed to enhance farmer productivity. By leveraging modern AI and data analytics, Agro-Rakshak provides hyper-personalized, actionable insights to farmers exactly when they need them. 
+**Agro-Rakshak** (meaning *"Agricultural Protector"*) is an end-to-end, multilingual platform designed to enhance farmer productivity. By leveraging modern AI and data analytics, Agro-Rakshak provides hyper-personalized, actionable insights to farmers exactly when they need them.
 
 ### 💡 The Problem We Solve
 Farmers often lack real-time, actionable insights tailored to their specific soil conditions and local weather. Agro-Rakshak bridges this gap by democratizing access to expert-level agricultural guidance, minimizing crop failure risks, and maximizing yield potential.
@@ -55,17 +54,12 @@ Farmers often lack real-time, actionable insights tailored to their specific soi
 | **Frontend** | React.js, Tailwind CSS, Capacitor (for cross-platform mobile support), React-I18next |
 | **Backend** | Node.js, Express.js |
 | **Database** | MongoDB |
-| **AI/ML Integration** | Google Gemini AI API, Groq SDK for smart predictions |
+| **AI/ML Integration** | Groq SDK for lightning-fast, intelligent predictions |
 | **Infrastructure** | Vercel Serverless Deployment, PWA Ready (Works offline and installs natively) |
 
 ---
 
-## 🚀 Getting Started
-
-Follow these instructions to set up the project locally for development, testing, or internal evaluation.
-
-### Prerequisites
-Make sure you have [Node.js](https://nodejs.org/) and [npm](https://npmjs.com/) installed on your machine.
+## ⚡ Quick Start
 
 ### 1. Clone the repository
 ```bash
@@ -74,55 +68,23 @@ cd agro-rakshak
 ```
 
 ### 2. Install Dependencies
-Install the dependencies for both the frontend and the backend.
-
 ```bash
-# Install frontend dependencies
+# Install frontend and backend dependencies
 npm install
-
-# Install backend dependencies
-cd backend
-npm install
-cd ..
+cd backend && npm install && cd ..
 ```
 
 ### 3. Environment Variables
-
-You will need to set up environment variables for both the frontend and backend.
-
-#### Backend `.env`
-Create a `.env` file in the `/backend` directory:
+Create a `.env` file in the `/backend` directory to connect your application:
 ```env
 PORT=5000
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
-GEMINI_API_KEY=your_gemini_api_key
 GROQ_API_KEY=your_groq_api_key
 ```
 
-#### Frontend `.env`
-Create a `.env` file in the root directory:
-```env
-REACT_APP_API_BASE=http://localhost:5000
-```
-
-### 4. Run the Application
-
-You can start both the frontend and backend simultaneously using the provided batch script (Windows) or start them manually.
-
-#### Manual Startup
-```bash
-# Terminal 1: Start Backend
-cd backend
-npm start
-
-# Terminal 2: Start Frontend
-npm start
-```
-The React frontend will be running locally at `http://localhost:3000` and the Express API at `http://localhost:5000`.
-
-### 5. Enable Permissions
-For the platform's full functionality to work correctly in your browser or mobile device, please ensure you allow the following permissions when prompted:
+### 4. Required Permissions
+For the platform's full functionality to work correctly, please ensure you allow the following permissions when prompted on web or mobile:
 - 📍 **Location**: Required for the Weather Intelligence System to provide localized weather updates.
 - 🎤 **Microphone**: Required for the AI Voice Assistant to enable hands-free interactions.
 - 🔊 **Speakers/Audio**: Required for the Voice Assistant Text-to-Speech output.
