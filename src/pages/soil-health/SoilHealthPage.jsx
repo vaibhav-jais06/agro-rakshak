@@ -128,19 +128,31 @@ export default function SoilHealthPage({ user }) {
     }
   };
 
-  const OWM_KEY = process.env.REACT_APP_OWM_KEY;
-
   const fetchWeather = async (lat, lon) => {
     try {
-      if (!OWM_KEY) return;
-      const r = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${OWM_KEY}&units=metric`);
+      const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code&timezone=auto`);
       const data = await r.json();
-      const tempC = data?.main?.temp;
-      const humidity = data?.main?.humidity;
-      const condition = data?.weather?.[0]?.description;
+      const tempC = data?.current?.temperature_2m;
+      const humidity = data?.current?.relative_humidity_2m;
+      const code = data?.current?.weather_code;
+      
+      let condition = 'Unknown';
+      if (code === 0) condition = 'Clear';
+      else if (code === 1 || code === 2) condition = 'Partly Cloudy';
+      else if (code === 3) condition = 'Cloudy';
+      else if (code >= 45 && code <= 48) condition = 'Fog';
+      else if (code >= 51 && code <= 57) condition = 'Drizzle';
+      else if (code >= 61 && code <= 67) condition = 'Rain';
+      else if (code >= 71 && code <= 77) condition = 'Snow';
+      else if (code >= 80 && code <= 82) condition = 'Rain Showers';
+      else if (code >= 85 && code <= 86) condition = 'Snow Showers';
+      else if (code >= 95 && code <= 99) condition = 'Thunderstorm';
+      
       setWeatherInfo({ temp: tempC, humidity, condition });
       if (typeof tempC === 'number') updateField('temperature', tempC.toFixed(1));
-    } catch {}
+    } catch (e) {
+      console.error("SoilHealth weather fetch error", e);
+    }
   };
 
   const detectLocation = async () => {
@@ -200,16 +212,16 @@ export default function SoilHealthPage({ user }) {
     setError('');
     if (!manualLocation.trim()) return;
     try {
-      if (!OWM_KEY) return;
-      const r = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(manualLocation)}&appid=${OWM_KEY}&units=metric`);
+      const r = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(manualLocation)}&count=1`);
       const data = await r.json();
-      if (!data || !data.coord) {
+      if (!data || !data.results || data.results.length === 0) {
         setError(t('soilHealth.couldNotFindLocation'));
         return;
       }
-      const lat = data.coord.lat;
-      const lon = data.coord.lon;
-      const infoName = `${data.name}, ${data.sys?.country || ''}`.trim();
+      const loc = data.results[0];
+      const lat = loc.latitude;
+      const lon = loc.longitude;
+      const infoName = `${loc.name}, ${loc.country || ''}`.trim();
 
       const autoData = await soilService.getAutoSoilData(lat, lon);
       const locState = autoData.state;

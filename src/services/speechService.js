@@ -103,8 +103,11 @@ const speechService = {
         utterance.pitch = typeof options.pitch === 'number' ? options.pitch : 1.1;
         utterance.volume = typeof options.volume === 'number' ? options.volume : 1.0;
 
-        // Try to find a female voice
-        const femaleVoices = voices.filter(voice => {
+        // Filter voices by requested language
+        const langVoices = voices.filter(v => v.lang.startsWith(lang.split('-')[0]));
+        
+        // Try to find a female voice in the requested language
+        const femaleVoices = langVoices.filter(voice => {
           const voiceName = voice.name.toLowerCase();
           return voiceName.includes('female') || 
                  voiceName.includes('zira') || 
@@ -113,7 +116,7 @@ const speechService = {
                  voiceName.includes('susan') ||
                  voiceName.includes('hazel') ||
                  voiceName.includes('heather') ||
-                 (voiceName.includes('google') && voiceName.includes('english') && voiceName.includes('female'));
+                 (voiceName.includes('google') && voiceName.includes('female'));
         });
 
         if (options.voiceName) {
@@ -122,17 +125,12 @@ const speechService = {
             utterance.voice = byName;
           }
         }
+        
         if (!utterance.voice) {
           if (femaleVoices.length > 0) {
-            const preferredVoice = femaleVoices.find(v => 
-              v.name.toLowerCase().includes('google') && 
-              v.name.toLowerCase().includes('uk') &&
-              v.name.toLowerCase().includes('female')
-            ) || femaleVoices.find(v => 
-              v.name.toLowerCase().includes('google') && 
-              v.name.toLowerCase().includes('female')
-            ) || femaleVoices[0];
-            utterance.voice = preferredVoice;
+            utterance.voice = femaleVoices[0];
+          } else if (langVoices.length > 0) {
+            utterance.voice = langVoices[0];
           } else if (voices.length > 0) {
             utterance.voice = voices[0];
           }

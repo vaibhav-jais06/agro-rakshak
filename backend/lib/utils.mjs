@@ -355,12 +355,17 @@ export async function askVoiceAssistant(prompt) {
         content: prompt
       }
     ],
-    model: "qwen/qwen3.6-27b",
+    model: "openai/gpt-oss-20b",
     temperature: 0.7,
     max_completion_tokens: 1024,
   });
 
   const rawContent = completion.choices[0]?.message?.content || "";
-  return rawContent.replace(/<think>[\s\S]*?<\/think>/g, "").trim();
+  let cleaned = rawContent;
+  if (cleaned.includes("</think>")) {
+    cleaned = cleaned.split("</think>")[1];
+  }
+  cleaned = cleaned.replace(/<think>[\s\S]*/g, "").trim();
+  return cleaned || rawContent;
 }
 

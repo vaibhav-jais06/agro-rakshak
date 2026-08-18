@@ -16,7 +16,7 @@ export default function VoiceAssistant({ user }) {
   const [conversation, setConversation] = useState([]);
   const [recognitionSupported, setRecognitionSupported] = useState(false);
   const [synthesisSupported, setSynthesisSupported] = useState(false);
-  const [ttsLang, setTtsLang] = useState('en-US');
+  const [ttsLang, setTtsLang] = useState(i18n.language || 'en-US');
   const [ttsRate, setTtsRate] = useState(0.9);
   const [ttsPitch, setTtsPitch] = useState(1.1);
   const [ttsVoiceName, setTtsVoiceName] = useState('');
