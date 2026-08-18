@@ -1,10 +1,9 @@
 import axios from 'axios';
 
-// Render production URL
-const DEFAULT_BASE = 'https://agro-rakshak.onrender.com';
+// API Base URL configuration
 const ENV_BASE = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_API_BASE;
-const isLocal = window.location.hostname === 'localhost' || window.location.hostname.match(/^[0-9.]+$/);
-const API_BASE_URL = ENV_BASE || (isLocal ? `http://${window.location.hostname}:5000` : DEFAULT_BASE);
+const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname.match(/^[0-9.]+$/));
+const API_BASE_URL = ENV_BASE ? ENV_BASE : (isLocal ? `http://${window.location.hostname}:5000` : '');
 
 const api = axios.create({
   baseURL: API_BASE_URL,

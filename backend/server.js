@@ -57,18 +57,38 @@ app.use(morgan('dev'));
 // Static uploads (research images)
 app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
 
-// Database connection
-mongoose.connect(config.database.uri, config.database.options)
-.then(() => {
-  console.log('✅ MongoDB Connected');
-  initScheduler();
-})
-.catch(err => {
-  console.error('❌ MongoDB Connection Error:', err);
-  // Don't exit in development, allow app to run without DB for testing
-  if (process.env.NODE_ENV === 'production') {
-    process.exit(1);
+// Database connection helper with connection reuse for serverless
+let isConnected = false;
+const connectDB = async () => {
+  if (isConnected || mongoose.connection.readyState === 1) {
+    return;
   }
+  try {
+    const db = await mongoose.connect(config.database.uri, config.database.options);
+    isConnected = db.connections[0].readyState === 1;
+    console.log('✅ MongoDB Connected');
+    if (process.env.VERCEL !== '1') {
+      initScheduler();
+    }
+  } catch (err) {
+    console.error('❌ MongoDB Connection Error:', err);
+    if (process.env.NODE_ENV === 'production' && process.env.VERCEL !== '1') {
+      process.exit(1);
+    }
+  }
+};
+
+// Auto-connect on startup for non-serverless environments
+if (process.env.VERCEL !== '1') {
+  connectDB();
+}
+
+// Serverless DB connection middleware
+app.use(async (req, res, next) => {
+  if (mongoose.connection.readyState !== 1 && config.database.uri) {
+    await connectDB();
+  }
+  next();
 });
 
 // Routes
@@ -91,6 +111,9 @@ app.use('/api/farmer', require('./routes/farmer'));
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', message: 'Agro Rakshak API is running' });
 });
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'OK', message: 'Agro Rakshak API is running' });
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -102,8 +125,8 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Serve frontend in production (Single Server Deployment fallback)
-if (process.env.NODE_ENV === 'production') {
+// Serve frontend in production (Single Server Deployment fallback when not on Vercel)
+if (process.env.NODE_ENV === 'production' && process.env.VERCEL !== '1') {
   const buildPath = path.join(__dirname, '../build');
   app.use(express.static(buildPath));
   app.get('*', (req, res) => {
@@ -115,6 +138,10 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+if (process.env.VERCEL !== '1' && require.main === module) {
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+  });
+}
+
+module.exports = app;

@@ -24,6 +24,7 @@ yarn-error.log*
 # Backend
 backend/node_modules
 backend/.env
+backend/uploads
 
 
 build-mobile.sh
