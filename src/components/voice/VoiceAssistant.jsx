@@ -179,6 +179,44 @@ export default function VoiceAssistant({ user }) {
     });
   };
 
+  const renderMarkdown = (text) => {
+    if (!text) return { __html: '' };
+    let html = text
+      .replace(/</g, '&lt;').replace(/>/g, '&gt;') 
+      .replace(/&lt;br&gt;/gi, '<br/>') 
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/\n/g, '<br/>');
+
+    if (html.includes('|')) {
+      const rows = html.split('<br/>');
+      let inTable = false;
+      let newHtml = [];
+      for (let i = 0; i < rows.length; i++) {
+        let row = rows[i].trim();
+        if (row.startsWith('|') && row.endsWith('|')) {
+          if (!inTable) {
+            inTable = true;
+            newHtml.push('<div class="overflow-x-auto my-3"><table class="min-w-full border-collapse border border-green-300">');
+          }
+          if (row.includes('---')) continue;
+          
+          let cells = row.split('|').filter((c, idx, arr) => idx > 0 && idx < arr.length - 1);
+          newHtml.push('<tr>' + cells.map(c => `<td class="border border-green-300 p-2 text-sm">${c.trim()}</td>`).join('') + '</tr>');
+        } else {
+          if (inTable) {
+            inTable = false;
+            newHtml.push('</table></div>');
+          }
+          newHtml.push(row);
+        }
+      }
+      if (inTable) newHtml.push('</table></div>');
+      html = newHtml.join('<br/>').replace(/<br\/>\s*<div/g, '<div').replace(/div>\s*<br\/>/g, 'div>');
+    }
+    return { __html: html };
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50">
       {/* Header */}
@@ -320,10 +358,10 @@ export default function VoiceAssistant({ user }) {
                <div className="w-full bg-green-50 rounded-lg p-4 border-2 border-green-200">
                  <div className="flex items-start space-x-2">
                    <Bot className="w-5 h-5 text-green-600 mt-1" />
-                   <div className="flex-1">
-                     <p className="text-sm font-medium text-green-800 mb-1">{t('voiceAssistant.aiResponse')}</p>
-                     <p className="text-gray-700 whitespace-pre-wrap">{currentResponse}</p>
-                   </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-green-800 mb-1">{t('voiceAssistant.aiResponse')}</p>
+                      <div className="text-gray-700 whitespace-pre-wrap" dangerouslySetInnerHTML={renderMarkdown(currentResponse)} />
+                    </div>
                  </div>
                </div>
              )}
@@ -412,10 +450,10 @@ export default function VoiceAssistant({ user }) {
                        <div className="flex-1">
                          <div className="flex items-center justify-between mb-1">
                            <p className="text-sm font-medium text-green-800">{t('voiceAssistant.aiAssistant')}</p>
-                           <p className="text-xs text-gray-500">{formatTime(entry.timestamp)}</p>
-                         </div>
-                         <p className="text-gray-700 whitespace-pre-wrap">{entry.answer}</p>
-                       </div>
+                            <p className="text-xs text-gray-500">{formatTime(entry.timestamp)}</p>
+                          </div>
+                          <div className="text-gray-700 whitespace-pre-wrap" dangerouslySetInnerHTML={renderMarkdown(entry.answer)} />
+                        </div>
                      </div>
                    </div>
                  </div>
