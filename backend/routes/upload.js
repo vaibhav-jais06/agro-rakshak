@@ -6,10 +6,16 @@ const auth = require('../middleware/auth');
 
 const router = express.Router();
 
-const uploadRootResearch = path.resolve(__dirname, '../public/uploads/research');
-const uploadRootProducts = path.resolve(__dirname, '../public/uploads/products');
-fs.mkdirSync(uploadRootResearch, { recursive: true });
-fs.mkdirSync(uploadRootProducts, { recursive: true });
+const isVercel = process.env.VERCEL === '1';
+const uploadRootResearch = isVercel ? '/tmp/uploads/research' : path.resolve(__dirname, '../public/uploads/research');
+const uploadRootProducts = isVercel ? '/tmp/uploads/products' : path.resolve(__dirname, '../public/uploads/products');
+
+try {
+  fs.mkdirSync(uploadRootResearch, { recursive: true });
+  fs.mkdirSync(uploadRootProducts, { recursive: true });
+} catch (error) {
+  console.warn('Could not create upload directories:', error.message);
+}
 
 const storageResearch = multer.diskStorage({
   destination: function (req, file, cb) {
