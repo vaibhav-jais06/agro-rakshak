@@ -355,11 +355,12 @@ export async function askVoiceAssistant(prompt) {
         content: prompt
       }
     ],
-    model: "llama-3.3-70b-versatile",
+    model: "qwen/qwen3.6-27b",
     temperature: 0.7,
     max_completion_tokens: 1024,
   });
 
-  return completion.choices[0]?.message?.content || "";
+  const rawContent = completion.choices[0]?.message?.content || "";
+  return rawContent.replace(/<think>[\s\S]*?<\/think>/g, "").trim();
 }
 
