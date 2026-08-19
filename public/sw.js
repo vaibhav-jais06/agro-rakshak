@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'agro-rakshak-v1';
+const CACHE_VERSION = 'agro-rakshak-v2';
 const URLS_TO_CACHE = [
   '/',
   '/index.html',
@@ -39,7 +39,10 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  if (event.request.url.includes('/api/')) {
+  const url = new URL(event.request.url);
+
+  // API requests: Network-First
+  if (url.pathname.includes('/api/')) {
     event.respondWith(
       fetch(event.request)
         .then((response) => {
@@ -58,24 +61,48 @@ self.addEventListener('fetch', (event) => {
           });
         })
     );
-  } else {
+    return;
+  }
+
+  // Navigation requests (HTML): Network-First
+  // This prevents the app from crashing when a new deployment is pushed
+  // and the cached index.html references old, deleted JS bundles.
+  if (event.request.mode === 'navigate' || url.pathname === '/' || url.pathname.endsWith('.html')) {
     event.respondWith(
-      caches.match(event.request).then((response) => {
-        return response || fetch(event.request).then((response) => {
-          if (!response || response.status !== 200 || response.type === 'error') {
-            return response;
-          }
+      fetch(event.request)
+        .then((response) => {
           const responseClone = response.clone();
           caches.open(CACHE_VERSION).then((cache) => {
             cache.put(event.request, responseClone);
           });
           return response;
-        });
-      }).catch(() => {
-        return new Response('Offline', { status: 503 });
-      })
+        })
+        .catch(() => {
+          return caches.match(event.request).then((response) => {
+            return response || caches.match('/index.html');
+          });
+        })
     );
+    return;
   }
+
+  // Static assets: Cache-First
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request).then((response) => {
+        if (!response || response.status !== 200 || response.type === 'error') {
+          return response;
+        }
+        const responseClone = response.clone();
+        caches.open(CACHE_VERSION).then((cache) => {
+          cache.put(event.request, responseClone);
+        });
+        return response;
+      });
+    }).catch(() => {
+      return new Response('Offline', { status: 503 });
+    })
+  );
 });
 
 self.addEventListener('push', (event) => {
