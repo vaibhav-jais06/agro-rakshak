@@ -36,7 +36,7 @@ const corsOptions = {
       allowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'https://agro-rakshak.vercel.app'];
     }
     
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    if (allowedOrigins.indexOf(origin) !== -1 || (origin && origin.endsWith('vercel.app'))) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
