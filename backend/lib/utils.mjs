@@ -348,7 +348,7 @@ export async function askVoiceAssistant(prompt) {
     messages: [
       {
         role: "system",
-        content: "You are an agricultural voice assistant. Respond clearly and concisely in a friendly manner. Provide practical advice for farmers in India."
+        content: "You are an agricultural voice assistant. Respond clearly and concisely in a friendly manner. Provide practical advice for farmers in India. DO NOT output any <think> blocks, reasoning process, or internal thoughts. Give only the final answer."
       },
       {
         role: "user",
@@ -365,7 +365,12 @@ export async function askVoiceAssistant(prompt) {
   if (cleaned.includes("</think>")) {
     cleaned = cleaned.split("</think>")[1];
   }
-  cleaned = cleaned.replace(/<think>[\s\S]*/g, "").trim();
+  cleaned = cleaned.replace(/<think>[\s\S]*/gi, "").trim();
+  
+  if (!cleaned && rawContent.toLowerCase().includes("<think>")) {
+    return "I'm sorry, I encountered an error while thinking about your request.";
+  }
+  
   return cleaned || rawContent;
 }
 
