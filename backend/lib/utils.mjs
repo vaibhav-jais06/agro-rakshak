@@ -177,7 +177,7 @@ export async function analyzeAgricultureImage(
           ],
         }
       ],
-      model: "llama-3.2-11b-vision-preview",
+      model: "openai/gpt-oss-20b",
       temperature: 0.2,
       max_tokens: 4000,
       top_p: 1,
@@ -188,7 +188,7 @@ export async function analyzeAgricultureImage(
 
     const responseText = chatCompletion.choices[0]?.message?.content || "";
     console.log("Raw AI Response:", responseText);
-    const usedModel = "llama-3.2-11b-vision-preview";
+    const usedModel = "openai/gpt-oss-20b";
 
     let jsonResponse;
     try {
@@ -295,7 +295,7 @@ export async function analyzeAgricultureImage(
       metadata: {
         analysisType: analysisType,
         timestamp: new Date().toISOString(),
-        modelUsed: usedModel || "llama-3.2-11b-vision-preview",
+        modelUsed: usedModel || "openai/gpt-oss-20b",
         provider: "Groq",
       },
     };
@@ -307,7 +307,7 @@ export async function analyzeAgricultureImage(
       metadata: {
         analysisType: analysisType,
         timestamp: new Date().toISOString(),
-        modelUsed: "llama-3.2-11b-vision-preview",
+        modelUsed: "openai/gpt-oss-20b",
         provider: "Groq",
         error: true,
         errorMessage: error.message,
@@ -355,7 +355,7 @@ export async function askVoiceAssistant(prompt) {
         content: prompt
       }
     ],
-    model: "llama3-8b-8192",
+    model: "qwen/qwen3.6-27b",
     temperature: 0.7,
     max_tokens: 1024,
   });
