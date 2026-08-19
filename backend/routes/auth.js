@@ -60,7 +60,7 @@ router.post('/register', async (req, res) => {
     await user.save();
 
     // Generate token
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET || 'agro_rakshak_fallback_secret_key', {
       expiresIn: '30d'
     });
 
@@ -97,7 +97,7 @@ router.post('/login', async (req, res) => {
     
     if (trimmedUsername === ADMIN_USERNAME && trimmedPassword === ADMIN_PASSWORD) {
       console.log('Admin login matched');
-      const token = jwt.sign({ id: 'ADMIN', role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '30d' });
+      const token = jwt.sign({ id: 'ADMIN', role: 'admin' }, process.env.JWT_SECRET || 'agro_rakshak_fallback_secret_key', { expiresIn: '30d' });
       return res.json({
         success: true,
         token,
@@ -113,7 +113,7 @@ router.post('/login', async (req, res) => {
     // Check for default user login (no DB connection)
     if (trimmedUsername === USER_USERNAME && trimmedPassword === USER_PASSWORD) {
       console.log('User login matched');
-      const token = jwt.sign({ id: 'USER', role: 'user' }, process.env.JWT_SECRET, { expiresIn: '30d' });
+      const token = jwt.sign({ id: 'USER', role: 'user' }, process.env.JWT_SECRET || 'agro_rakshak_fallback_secret_key', { expiresIn: '30d' });
       return res.json({
         success: true,
         token,
@@ -137,7 +137,7 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ success: false, message: 'Username or phone is required' });
     }
 
-    if (!user) {
+    if (!user || !user.password) {
       return res.status(400).json({ success: false, message: 'Invalid credentials' });
     }
 
@@ -148,7 +148,7 @@ router.post('/login', async (req, res) => {
     }
 
     // Generate token
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET || 'agro_rakshak_fallback_secret_key', {
       expiresIn: '30d'
     });
 

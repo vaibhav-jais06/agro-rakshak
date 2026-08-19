@@ -42,7 +42,7 @@ exports.register = async (req, res) => {
     // Generate token
     const token = jwt.sign(
       { id: user._id }, 
-      process.env.JWT_SECRET, 
+      process.env.JWT_SECRET || 'agro_rakshak_fallback_secret_key', 
       { expiresIn: '30d' }
     );
 
@@ -100,7 +100,7 @@ exports.login = async (req, res) => {
     // Generate token
     const token = jwt.sign(
       { id: user._id }, 
-      process.env.JWT_SECRET, 
+      process.env.JWT_SECRET || 'agro_rakshak_fallback_secret_key', 
       { expiresIn: '30d' }
     );
 
