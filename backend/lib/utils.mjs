@@ -177,7 +177,7 @@ export async function analyzeAgricultureImage(
           ],
         }
       ],
-      model: "openai/gpt-oss-20b",
+      model: "qwen/qwen3.6-27b",
       temperature: 0.2,
       max_tokens: 4000,
       top_p: 1,
@@ -188,7 +188,7 @@ export async function analyzeAgricultureImage(
 
     const responseText = chatCompletion.choices[0]?.message?.content || "";
     console.log("Raw AI Response:", responseText);
-    const usedModel = "openai/gpt-oss-20b";
+    const usedModel = "qwen/qwen3.6-27b";
 
     let jsonResponse;
     try {
@@ -295,7 +295,7 @@ export async function analyzeAgricultureImage(
       metadata: {
         analysisType: analysisType,
         timestamp: new Date().toISOString(),
-        modelUsed: usedModel || "openai/gpt-oss-20b",
+        modelUsed: usedModel || "qwen/qwen3.6-27b",
         provider: "Groq",
       },
     };
@@ -307,7 +307,7 @@ export async function analyzeAgricultureImage(
       metadata: {
         analysisType: analysisType,
         timestamp: new Date().toISOString(),
-        modelUsed: "openai/gpt-oss-20b",
+        modelUsed: "qwen/qwen3.6-27b",
         provider: "Groq",
         error: true,
         errorMessage: error.message,
