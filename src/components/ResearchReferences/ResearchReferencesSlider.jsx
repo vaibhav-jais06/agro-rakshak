@@ -1,19 +1,42 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import apiService from '../../services/apiService';
+
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function ResearchReferencesSlider() {
   const { t } = useTranslation();
-  const [entries, setEntries] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [itemsPerSlide, setItemsPerSlide] = useState(3);
   const [page, setPage] = useState(0);
   const [hover, setHover] = useState(false);
   const intervalRef = useRef(null);
-  const sseRef = useRef(null);
+
+  const entries = useMemo(() => [
+    {
+      _id: 't1',
+      name: t('testimonials.t1_name', 'Rajesh Patil'),
+      role: t('testimonials.t1_role', 'Cotton Farmer, Maharashtra'),
+      description: t('testimonials.t1_desc', 'The market trends feature helped me hold my harvest for an extra two weeks, allowing me to sell when prices peaked at the local mandi.'),
+      avatar: '/assets/images/farmer_rajesh.jpg',
+      metrics: [{ label: t('testimonials.t1_metric_label', 'Profit'), value: t('testimonials.t1_metric_value', '+22%'), color: '#15803d' }]
+    },
+    {
+      _id: 't2',
+      name: t('testimonials.t2_name', 'Manish Sharma'),
+      role: t('testimonials.t2_role', 'Wheat Farmer, Punjab'),
+      description: t('testimonials.t2_desc', 'Agro Rakshak helped me identify brown rust early on. The recommended organic treatment saved my entire crop and increased my overall yield compared to last year.'),
+      avatar: '/assets/images/farmer_manish.jpg',
+      metrics: [{ label: t('testimonials.t2_metric_label', 'Yield'), value: t('testimonials.t2_metric_value', '+30%'), color: '#15803d' }]
+    },
+    {
+      _id: 't3',
+      name: t('testimonials.t3_name', 'Kavita Devi'),
+      role: t('testimonials.t3_role', 'Vegetable Farmer, UP'),
+      description: t('testimonials.t3_desc', "The soil analysis feature showed I was overusing nitrogen. By adjusting my fertilizers based on the app's recommendation, I saved ₹15,000 this season."),
+      avatar: '/assets/images/farmer_kavita.jpg',
+      metrics: [{ label: t('testimonials.t3_metric_label', 'Savings'), value: t('testimonials.t3_metric_value', '₹15k'), color: '#15803d' }]
+    }
+  ], [t]);
 
   const pages = useMemo(() => {
     const size = Math.max(1, itemsPerSlide);
@@ -36,30 +59,6 @@ export default function ResearchReferencesSlider() {
     updatePerSlide();
     window.addEventListener('resize', updatePerSlide);
     return () => window.removeEventListener('resize', updatePerSlide);
-  }, []);
-
-  useEffect(() => {
-    const load = async () => {
-      try {
-        setLoading(true);
-        const res = await apiService.getResearch();
-        const data = res.data || [];
-        setEntries(data);
-        setError(null);
-        setPage(0);
-      } catch (e) {
-        setError('Failed to load');
-      } finally {
-        setLoading(false);
-      }
-    };
-    load();
-    sseRef.current = apiService.subscribeResearchUpdates(() => {
-      load();
-    });
-    return () => {
-      if (sseRef.current) sseRef.current.close();
-    };
   }, []);
 
   useEffect(() => {
@@ -88,20 +87,6 @@ export default function ResearchReferencesSlider() {
     setPage((p) => (p + 1) % pages);
   };
 
-  if (loading) {
-    return (
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center text-gray-800 mb-2">
-            {t('realFarmerResult.title')}
-          </h2>
-          <p className="text-center text-gray-600 mb-8">
-            {t('common.loading')}
-          </p>
-        </div>
-      </section>
-    );
-  }
 
   if (!entries.length) {
     return (
