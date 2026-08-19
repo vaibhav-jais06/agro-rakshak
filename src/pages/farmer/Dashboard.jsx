@@ -116,7 +116,26 @@ export default function FarmerDashboard({ user }) {
                 <Wallet className="w-5 h-5 text-blue-600" />
                 <h3 className="text-lg font-bold">{t('farmer.financialSummary', 'Financial Summary')}</h3>
               </div>
-              <p className="text-sm text-text-secondary">{t('farmer.summaryHint', 'Track transactions and loans under Finances.')}</p>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center pb-2 border-b border-gray-100">
+                  <span className="text-sm text-gray-500">{t('farmer.totalIncome', 'Total Income')}</span>
+                  <span className="font-semibold text-green-600">₹{stats?.income || 0}</span>
+                </div>
+                <div className="flex justify-between items-center pb-2 border-b border-gray-100">
+                  <span className="text-sm text-gray-500">{t('farmer.totalExpenses', 'Total Expenses')}</span>
+                  <span className="font-semibold text-red-500">₹{(stats?.income || 0) - (stats?.profit || 0)}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium text-gray-700">{t('farmer.netProfit', 'Net Profit')}</span>
+                  <span className="font-bold text-gray-900">₹{stats?.profit || 0}</span>
+                </div>
+                <button 
+                  onClick={() => navigate(`/farmer/finances${targetUserId ? `?userId=${targetUserId}` : ''}`)}
+                  className="w-full mt-2 py-2 text-sm text-primary bg-primary/10 rounded-lg hover:bg-primary/20 transition-colors font-medium"
+                >
+                  {t('farmer.viewDetails', 'View Full Details')}
+                </button>
+              </div>
             </div>
             <div className="rounded-2xl bg-white border border-border p-5">
               <div className="flex items-center gap-2 mb-4">
