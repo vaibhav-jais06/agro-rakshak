@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, Activity, Calendar, AlertCircle, Syringe, Heart, Settings, Plus, Info, X, Trash2 } from 'lucide-react';
+import { ArrowLeft, Activity, Calendar, AlertCircle, Syringe, Heart, Settings, Plus, Info, X, Trash2, Filter } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function LivestockManagementPage({ user }) {
@@ -9,6 +9,7 @@ export default function LivestockManagementPage({ user }) {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [filterType, setFilterType] = useState('all'); // 'all', 'sick', 'vaccination'
 
   const getTranslation = (key, defaultText) => {
     const translation = t(key);
@@ -28,7 +29,8 @@ export default function LivestockManagementPage({ user }) {
     { id: 1, type: 'Cattle', tag: 'C-104', status: 'Sick - Fever', date: '2026-08-20', action: 'Vet Consult Scheduled' },
     { id: 2, type: 'Poultry', tag: 'Flock A', status: 'Healthy', date: '2026-08-19', action: 'Vaccinated (Fowl Pox)' },
     { id: 3, type: 'Goat', tag: 'G-02', status: 'Healthy', date: '2026-08-15', action: 'Routine Checkup' },
-    { id: 4, type: 'Cattle', tag: 'C-088', status: 'Healthy - Pregnant', date: '2026-08-10', action: 'Diet Adjusted' }
+    { id: 4, type: 'Cattle', tag: 'C-088', status: 'Healthy - Pregnant', date: '2026-08-10', action: 'Diet Adjusted' },
+    { id: 5, type: 'Poultry', tag: 'Flock B', status: 'Healthy', date: '2026-08-08', action: 'Vaccination Due' }
   ]);
 
   const [newRecord, setNewRecord] = useState({
@@ -42,7 +44,7 @@ export default function LivestockManagementPage({ user }) {
   const getImageForType = (type) => {
     switch (type.toLowerCase()) {
       case 'cattle': return 'https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=100&h=100&fit=crop';
-      case 'poultry': return 'https://images.unsplash.com/photo-1548550023-2bf3c49bceb6?w=100&h=100&fit=crop';
+      case 'poultry': return 'https://images.unsplash.com/photo-1563213126-a4273aed2016?w=100&h=100&fit=crop'; // Fixed image
       case 'goat': return 'https://images.unsplash.com/photo-1524024973431-2ad916746881?w=100&h=100&fit=crop';
       default: return 'https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=100&h=100&fit=crop';
     }
@@ -79,6 +81,12 @@ export default function LivestockManagementPage({ user }) {
     setRecentRecords(recentRecords.filter(r => r.id !== id));
   };
 
+  const filteredRecords = recentRecords.filter(record => {
+    if (filterType === 'sick') return record.status.toLowerCase().includes('sick');
+    if (filterType === 'vaccination') return record.action.toLowerCase().includes('vaccin');
+    return true;
+  });
+
   return (
     <motion.div 
       initial={{ opacity: 0 }}
@@ -106,29 +114,44 @@ export default function LivestockManagementPage({ user }) {
         
         {/* Quick Stats Grid */}
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="glass-card bg-white p-6 rounded-3xl border border-border/50 flex flex-col items-center text-center">
-             <div className="w-12 h-12 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-4">
+          <motion.div 
+             whileHover={{ scale: 1.02 }}
+             whileTap={{ scale: 0.98 }}
+             onClick={() => { setFilterType('all'); setActiveTab('overview'); }}
+             className={`glass-card p-6 rounded-3xl border flex flex-col items-center text-center cursor-pointer transition-colors ${filterType === 'all' ? 'bg-blue-50 border-blue-200' : 'bg-white border-border/50 hover:bg-gray-50'}`}
+          >
+             <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-4">
                <Heart className="w-6 h-6" />
              </div>
              <h3 className="text-3xl font-bold text-text-primary">{livestockStats.totalCattle + livestockStats.totalPoultry + livestockStats.totalGoats}</h3>
              <p className="text-text-secondary font-medium mt-1">Total Livestock</p>
-          </div>
+          </motion.div>
 
-          <div className="glass-card bg-white p-6 rounded-3xl border border-border/50 flex flex-col items-center text-center">
-             <div className="w-12 h-12 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-4">
+          <motion.div 
+             whileHover={{ scale: 1.02 }}
+             whileTap={{ scale: 0.98 }}
+             onClick={() => { setFilterType('sick'); setActiveTab('overview'); }}
+             className={`glass-card p-6 rounded-3xl border flex flex-col items-center text-center cursor-pointer transition-colors ${filterType === 'sick' ? 'bg-red-50 border-red-200' : 'bg-white border-border/50 hover:bg-gray-50'}`}
+          >
+             <div className="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center mb-4">
                <Activity className="w-6 h-6" />
              </div>
              <h3 className="text-3xl font-bold text-text-primary">{livestockStats.sickAnimals}</h3>
              <p className="text-text-secondary font-medium mt-1">Health Alerts</p>
-          </div>
+          </motion.div>
 
-          <div className="glass-card bg-white p-6 rounded-3xl border border-border/50 flex flex-col items-center text-center">
-             <div className="w-12 h-12 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mb-4">
+          <motion.div 
+             whileHover={{ scale: 1.02 }}
+             whileTap={{ scale: 0.98 }}
+             onClick={() => { setFilterType('vaccination'); setActiveTab('overview'); }}
+             className={`glass-card p-6 rounded-3xl border flex flex-col items-center text-center cursor-pointer transition-colors ${filterType === 'vaccination' ? 'bg-amber-50 border-amber-200' : 'bg-white border-border/50 hover:bg-gray-50'}`}
+          >
+             <div className="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-4">
                <Syringe className="w-6 h-6" />
              </div>
              <h3 className="text-3xl font-bold text-text-primary">{livestockStats.upcomingVaccinations}</h3>
              <p className="text-text-secondary font-medium mt-1">Pending Vaccinations</p>
-          </div>
+          </motion.div>
 
           <motion.div 
              whileHover={{ scale: 1.02 }}
@@ -174,6 +197,16 @@ export default function LivestockManagementPage({ user }) {
                       <Calendar className="w-5 h-5 text-primary" />
                       Historical Farm Records
                     </h3>
+                    
+                    {filterType !== 'all' && (
+                      <button 
+                        onClick={() => setFilterType('all')}
+                        className="flex items-center gap-1 text-sm font-medium text-primary hover:text-primary-hover bg-primary/10 px-3 py-1.5 rounded-full"
+                      >
+                        <Filter className="w-4 h-4" />
+                        Clear Filter
+                      </button>
+                    )}
                   </div>
                   
                   <div className="overflow-x-auto">
@@ -188,11 +221,13 @@ export default function LivestockManagementPage({ user }) {
                         </tr>
                       </thead>
                       <tbody>
-                        {recentRecords.length === 0 ? (
+                        {filteredRecords.length === 0 ? (
                           <tr>
-                            <td colSpan="5" className="py-8 text-center text-text-secondary">No records found. Click "Add Record" to start tracking.</td>
+                            <td colSpan="5" className="py-8 text-center text-text-secondary">
+                              No records found for the current filter.
+                            </td>
                           </tr>
-                        ) : recentRecords.map(record => (
+                        ) : filteredRecords.map(record => (
                           <tr key={record.id} className="border-b border-border/20 hover:bg-surface-hover/50 transition-colors group">
                             <td className="py-4 px-4">
                               <div className="flex items-center gap-3">
