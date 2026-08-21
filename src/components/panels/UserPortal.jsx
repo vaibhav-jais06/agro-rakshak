@@ -199,8 +199,8 @@ export default function UserPortal({ user, onLogout }) {
     },
     {
       icon: <Activity className="w-6 h-6" />,
-      title: t("features.livestockManagement") || "Livestock Management",
-      desc: t("features.livestockManagementDesc") || "Monitor livestock health, records, and get advisory",
+      title: t("features.livestockManagement") === "features.livestockManagement" ? "Livestock Management" : t("features.livestockManagement"),
+      desc: t("features.livestockManagementDesc") === "features.livestockManagementDesc" ? "Monitor livestock health, records, and get advisory" : t("features.livestockManagementDesc"),
       color: "text-cyan-500",
       bg: "bg-cyan-50",
       onClick: () => navigate("/livestock-management"),
