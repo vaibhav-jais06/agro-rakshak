@@ -16,15 +16,6 @@ export default function LivestockManagementPage({ user }) {
     return translation === key ? defaultText : translation;
   };
 
-  // Mock data for livestock
-  const [livestockStats, setLivestockStats] = useState({
-    totalCattle: 15,
-    totalPoultry: 120,
-    totalGoats: 8,
-    sickAnimals: 2,
-    upcomingVaccinations: 3
-  });
-
   const [recentRecords, setRecentRecords] = useState([
     { id: 1, type: 'Cattle', tag: 'C-104', status: 'Sick - Fever', date: '2026-08-20', action: 'Vet Consult Scheduled' },
     { id: 2, type: 'Poultry', tag: 'Flock A', status: 'Healthy', date: '2026-08-19', action: 'Vaccinated (Fowl Pox)' },
@@ -44,7 +35,7 @@ export default function LivestockManagementPage({ user }) {
   const getImageForType = (type) => {
     switch (type.toLowerCase()) {
       case 'cattle': return 'https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=100&h=100&fit=crop';
-      case 'poultry': return 'https://images.unsplash.com/photo-1563213126-a4273aed2016?w=100&h=100&fit=crop'; // Fixed image
+      case 'poultry': return 'https://images.unsplash.com/photo-1563213126-a4273aed2016?w=100&h=100&fit=crop';
       case 'goat': return 'https://images.unsplash.com/photo-1524024973431-2ad916746881?w=100&h=100&fit=crop';
       default: return 'https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=100&h=100&fit=crop';
     }
@@ -59,14 +50,6 @@ export default function LivestockManagementPage({ user }) {
       ...recentRecords
     ]);
     
-    // Update stats conditionally based on status
-    if (newRecord.status.toLowerCase().includes('sick')) {
-      setLivestockStats(prev => ({ ...prev, sickAnimals: prev.sickAnimals + 1 }));
-    }
-    if (newRecord.action.toLowerCase().includes('vaccin')) {
-      setLivestockStats(prev => ({ ...prev, upcomingVaccinations: Math.max(0, prev.upcomingVaccinations - 1) }));
-    }
-
     setIsAddModalOpen(false);
     setNewRecord({
       type: 'Cattle',
@@ -86,6 +69,11 @@ export default function LivestockManagementPage({ user }) {
     if (filterType === 'vaccination') return record.action.toLowerCase().includes('vaccin');
     return true;
   });
+
+  // Dynamically calculate stats based on records
+  const totalLivestock = recentRecords.length;
+  const sickAnimals = recentRecords.filter(r => r.status.toLowerCase().includes('sick')).length;
+  const upcomingVaccinations = recentRecords.filter(r => r.action.toLowerCase().includes('vaccin')).length;
 
   return (
     <motion.div 
@@ -123,7 +111,7 @@ export default function LivestockManagementPage({ user }) {
              <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-4">
                <Heart className="w-6 h-6" />
              </div>
-             <h3 className="text-3xl font-bold text-text-primary">{livestockStats.totalCattle + livestockStats.totalPoultry + livestockStats.totalGoats}</h3>
+             <h3 className="text-3xl font-bold text-text-primary">{totalLivestock}</h3>
              <p className="text-text-secondary font-medium mt-1">Total Livestock</p>
           </motion.div>
 
@@ -136,7 +124,7 @@ export default function LivestockManagementPage({ user }) {
              <div className="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center mb-4">
                <Activity className="w-6 h-6" />
              </div>
-             <h3 className="text-3xl font-bold text-text-primary">{livestockStats.sickAnimals}</h3>
+             <h3 className="text-3xl font-bold text-text-primary">{sickAnimals}</h3>
              <p className="text-text-secondary font-medium mt-1">Health Alerts</p>
           </motion.div>
 
@@ -149,7 +137,7 @@ export default function LivestockManagementPage({ user }) {
              <div className="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-4">
                <Syringe className="w-6 h-6" />
              </div>
-             <h3 className="text-3xl font-bold text-text-primary">{livestockStats.upcomingVaccinations}</h3>
+             <h3 className="text-3xl font-bold text-text-primary">{upcomingVaccinations}</h3>
              <p className="text-text-secondary font-medium mt-1">Pending Vaccinations</p>
           </motion.div>
 
