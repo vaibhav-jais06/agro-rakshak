@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Loader } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import geminiService from '../../services/geminiService';
 
 // Q&A Knowledge base
 const qaKnowledgeBase = {
@@ -134,27 +135,39 @@ export default function SoilQATab() {
   const handleAsk = async () => {
     if (!inputValue.trim()) return;
 
+    const currentInput = inputValue;
     const userMsg = {
       id: Date.now(),
       type: 'user',
-      text: inputValue
+      text: currentInput
     };
 
     setMessages((prev) => [...prev, userMsg]);
     setInputValue('');
     setLoading(true);
 
-    // Simulate API delay
-    setTimeout(() => {
-      const answer = generateAnswer(inputValue);
+    try {
+      const prompt = `You are an expert agricultural assistant. Answer this farming/soil health question concisely for an Indian farmer: ${currentInput}`;
+      const answer = await geminiService.askGemini(prompt);
+      
       const botMsg = {
         id: Date.now() + 1,
         type: 'bot',
         text: answer
       };
       setMessages((prev) => [...prev, botMsg]);
+    } catch (err) {
+      console.warn("AI service failed, falling back to local Q&A", err);
+      const fallbackAnswer = generateAnswer(currentInput);
+      const botMsg = {
+        id: Date.now() + 1,
+        type: 'bot',
+        text: fallbackAnswer
+      };
+      setMessages((prev) => [...prev, botMsg]);
+    } finally {
       setLoading(false);
-    }, 500);
+    }
   };
 
   return (
@@ -173,7 +186,9 @@ export default function SoilQATab() {
                   : 'bg-green-100 text-gray-800 rounded-bl-none border border-green-200'
               }`}
             >
-              <p className="text-sm">{msg.text}</p>
+              <div className={`text-sm ${msg.type === 'user' ? 'text-white' : 'text-gray-800'}`}>
+                {msg.text}
+              </div>
             </div>
           </div>
         ))}
