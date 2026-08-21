@@ -27,6 +27,7 @@ import KnowledgeHubPage from './pages/KnowledgeHubPage';
 import WarehouseGuidePage from './pages/warehouse/WarehouseGuidePage';
 import PesticidePredictorPage from './pages/pesticide/PesticidePredictorPage';
 import TractorRentPage from './pages/rent/TractorRentPage';
+import LivestockManagementPage from './pages/livestock/LivestockManagementPage';
 import FarmerDashboard from './pages/farmer/Dashboard';
 import FarmerProfile from './pages/farmer/Profile';
 import FarmerCrops from './pages/farmer/Crops';
@@ -241,6 +242,16 @@ export default function AgroRakshak() {
                 <Navigate to="/login" replace />
               ) : (
                 <TractorRentPage user={user} />
+              )
+            }
+          />
+          <Route
+            path="/livestock-management"
+            element={
+              !user ? (
+                <Navigate to="/login" replace />
+              ) : (
+                <LivestockManagementPage user={user} />
               )
             }
           />

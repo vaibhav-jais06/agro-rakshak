@@ -20,6 +20,7 @@ import {
   Search,
   MapPin,
   Truck,
+  Activity,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
@@ -195,6 +196,14 @@ export default function UserPortal({ user, onLogout }) {
       color: "text-lime-500",
       bg: "bg-lime-50",
       onClick: () => navigate("/agri-shop"),
+    },
+    {
+      icon: <Activity className="w-6 h-6" />,
+      title: t("features.livestockManagement") || "Livestock Management",
+      desc: t("features.livestockManagementDesc") || "Monitor livestock health, records, and get advisory",
+      color: "text-cyan-500",
+      bg: "bg-cyan-50",
+      onClick: () => navigate("/livestock-management"),
     },
   ];
 

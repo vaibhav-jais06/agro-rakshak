@@ -41,6 +41,7 @@ Farmers often lack real-time, actionable insights tailored to their specific soi
 - 🌾 **Crop Recommendations**: AI-driven crop selection based on soil health parameters, weather patterns, and market demand.
 - 🐛 **Pesticide Predictor**: Intelligent diagnosis of crop diseases with highly accurate, targeted pesticide recommendations via image analysis.
 - 📊 **Soil Health Dashboard**: Upload, visualize, and track soil testing results over time to optimize fertilizer usage.
+- 🐄 **Livestock Management**: Monitor livestock health, view historical farm records, and get actionable AI-powered advisory services.
 - 🛒 **Agri Shop Integration**: A dedicated marketplace connecting farmers directly with reliable agricultural input suppliers.
 - 🌍 **Multilingual Support**: Fully localized in English, Hindi, Bengali, Tamil, and Telugu to reach farmers across India.
 - 📚 **Knowledge Hub**: An accessible, rich library of farming best practices, post-harvest storage guides, and success stories.
@@ -89,6 +90,13 @@ For the platform's full functionality to work correctly, please ensure you allow
 - 🎤 **Microphone**: Required for the AI Voice Assistant to enable hands-free interactions.
 - 🔊 **Speakers/Audio**: Required for the Voice Assistant Text-to-Speech output.
 - 📷 **Camera**: Required for the Pesticide Predictor's live preview and disease diagnosis.
+
+---
+
+## 🔑 Test Accounts
+Use the following credentials to explore the platform:
+- **Admin**: `admin` / `admin`
+- **User**: `user` / `user`
 
 ---
 
