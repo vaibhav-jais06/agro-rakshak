@@ -93,7 +93,7 @@ const generateAnswer = (question) => {
   // Find matching category
   for (const [category, data] of Object.entries(qaKnowledgeBase)) {
     for (const keyword of data.keywords) {
-      if (q.includes(keyword)) {
+      if (new RegExp(`\\b${keyword}\\b`, 'i').test(q)) {
         const answers = data.answers;
         return answers[Math.floor(Math.random() * answers.length)];
       }
